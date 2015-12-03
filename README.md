@@ -1,30 +1,9 @@
-#Express Basics Demo Site
+#AJP Codes NSS Capstone
 
-This repo features an express app to serve as demo in the Express Basics course on Treehouse.
+This is a student project for Nashville Software School (NSS)
+The goal is to write an app that plays the card game 'HaraKiri' using Firebase, Express, Angular, and Node.
 
-## How to use this repo
-To follow along with the Treehouse course, checkout the branch with the associated video.  The video for a given stage will indicate which branch to checkout.
 
-**To start with the very first video:**
-```
-git clone <this-repo>
-cd <this-repo>
-# you should already be on the master branch, but just in case
-git checkout master
-```
-
-**To begin with progress up until a certain video, for example "S2V2":**
-```
-# from this repo
-git checkout S2V2
-```
-These instructions are outlined in individual videos. 
-
-**To view the final app:**
-```
-# from this repo
-git checkout final
-```
 
 ## Set Up
 ```
