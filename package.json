@@ -1,0 +1,23 @@
+{
+  "name": "express-basics",
+  "version": "1.0.0",
+  "description": "TeamTreeHouse Tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdngr/treehouse-express-basics.git"
+  },
+  "author": "Allen Phelps",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hdngr/treehouse-express-basics/issues"
+  },
+  "homepage": "https://github.com/hdngr/treehouse-express-basics#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
+  }
+}
