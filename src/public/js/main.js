@@ -8,13 +8,14 @@ app.config(['$routeProvider', function($routeProvider){
 	//route for main song view
 	$routeProvider
 		.when('/', {
-			templateUrl: './static/partials/welcome.jade',
+			templateUrl: './static/partials/welcome.html',
 			controller: 'OptionsCtrl as optionsCtrl'
-		});
-	// 	.when('/register', {
-	// 		templateUrl: 'partials/register.html',
-	// 		controller: 'AuthCtrl as authCtrl'
-	// 	})
+		})
+		.when('/play2', {
+			templateUrl: './static/partials/gameboard2.html',
+			controller: 'GameCtrl as gameCtrl'
+		})
+
 	// 	.when('/songs/list', {
 	// 		templateUrl: 'partials/songList.html',
 	// 		controller: 'ShowSongsCtrl as showSongsCtrl'

@@ -3,25 +3,27 @@ html(lang="en")
 
 head
   title Landing Page
-  link(rel='stylesheet', href='', type='text/css')
+  link(rel='stylesheet', href='/static/css/main.css', type='text/css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Orbitron:400,700', type='text/css')
 
 body(ng-app="CapstoneApp")
 
-  h1 I will be an awesome app
-
   div(ng-view)
 
-      //Capstone Scripts
+  //Capstone Scripts
 
-      //dependencies
-      script(src='/static/bower_components/jquery/dist/jquery.min.js')
-      script(src='/static/bower_components/angular/angular.min.js')
-      script(src='/static/bower_components/firebase/firebase.js')
-      script(src='/static/bower_components/angularfire/dist/angularfire.min.js')
-      script(src='/static/bower_components/angular-filter/dist/angular-filter.min.js')
-      script(src='/static/bower_components/angular-route/angular-route.min.js')
-      script(src='/static/bower_components/jquery/dist/jquery.min.js')
-      //app scripts
-      script(src='/static/js/main.js')
+  //dependencies
+  script(src='/static/bower_components/jquery/dist/jquery.min.js')
+  script(src='/static/bower_components/angular/angular.min.js')
+  script(src='/static/bower_components/firebase/firebase.js')
+  script(src='/static/bower_components/angularfire/dist/angularfire.min.js')
+  script(src='/static/bower_components/angular-resource/angular-resource.min.js')
+  script(src='/static/bower_components/angular-filter/dist/angular-filter.min.js')
+  script(src='/static/bower_components/angular-route/angular-route.min.js')
+
+  //app scripts
+  script(src='/static/js/main.js')
+  //controllers
+  script(src='/static/js/optionsCtrl.js')
 
 
