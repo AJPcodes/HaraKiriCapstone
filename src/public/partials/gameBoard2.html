@@ -1,13 +1,71 @@
 <div id='gameBoard2'>
-	<h1>HaraKiri</h1>
-	<section class="cardContainer">
-    <div id="card">
-	    <figure class="front">
 
-	    </figure>
-	    <figure class="back">
+	<div id="leftSidebar">
+		<h2>Scoreboard & Options go here</h2>
 
-			</figure>
-    </div>
-  </section>
+		<h2>Drawn Card</h2>
+		<section class="deck cardContainer">
+	  	  <figure class="face">
+					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+	  	  </figure>
+	   	 	<figure class="back">
+				</figure>
+ 		</section>
+
+	</div>
+
+	<div id="playerBoards">
+
+		<section class="playerDisplay">
+			<h2>{{gameCtrl.player1.name}}</h2>
+		</section>
+		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player1.cards">
+			<div class="card">
+	  	  <figure class="face">
+					<img src="{{card.images.png}}" alt="card.code">
+	  	  </figure>
+	   	 	<figure class="back">
+					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+				</figure>
+			</div>
+ 		</section>
+
+ 		<section class="playerDisplay">
+			<h2>{{gameCtrl.player2.name}}</h2>
+		</section>
+		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player2.cards">
+	  	  <figure class="face">
+					<img src="{{card.images.png}}" alt="card.code">
+	  	  </figure>
+	   	 	<figure class="back">
+					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+				</figure>
+ 		 </section>
+
+
+	</div> <!--end player boards -->
+
+	<div id="rightSidebar">
+		<h2>Deck</h2>
+
+		<section class="deck cardContainer">
+	  	  <figure class="face">
+					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+	  	  </figure>
+ 		</section>
+
+ 		<h2>Discard</h2>
+
+ 		<section class="discard cardContainer" >
+	  	  <figure class="face">
+					<img src="{{gameCtrl.deck.cards[0].images.png}}" alt="gameCtrl.deck.cards[0].code">
+	  	  </figure>
+	   	 	<figure class="back">
+					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+				</figure>
+ 		</section>
+
+
+	</div>
+
 </div>
