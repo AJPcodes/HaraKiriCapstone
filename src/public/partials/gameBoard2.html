@@ -1,7 +1,14 @@
 <div id='gameBoard2'>
 
 	<div id="leftSidebar">
-		<h2>Scoreboard & Options go here</h2>
+
+		<section class="scoreBoard">
+			<h3>{{gameCtrl.player1.name}}</h3>
+			<p>Score: {{gameCtrl.player1.score}}</p>
+
+			<h3>{{gameCtrl.player2.name}}</h3>
+			<p>Score: {{gameCtrl.player2.score}}</p>
+		</section>
 
 		<h2>Drawn Card</h2>
 		<section class="deck cardContainer">
@@ -19,6 +26,7 @@
 		<section class="playerDisplay">
 			<h2>{{gameCtrl.player1.name}}</h2>
 		</section>
+
 		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player1.cards">
 			<div class="card">
 	  	  <figure class="face">
@@ -30,17 +38,19 @@
 			</div>
  		</section>
 
- 		<section class="playerDisplay">
+		<section class="playerDisplay">
 			<h2>{{gameCtrl.player2.name}}</h2>
 		</section>
 		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player2.cards">
+			<div class="card">
 	  	  <figure class="face">
 					<img src="{{card.images.png}}" alt="card.code">
 	  	  </figure>
 	   	 	<figure class="back">
 					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
 				</figure>
- 		 </section>
+			</div>
+ 		</section>
 
 
 	</div> <!--end player boards -->

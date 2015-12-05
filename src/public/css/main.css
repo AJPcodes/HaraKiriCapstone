@@ -175,17 +175,31 @@ justify-content: center;
   width: 30%;
 }
 
-
-.playerCards img,
-.deck img,
-.discard img {
-  max-height: 9em;
-  max-width: 5em;
-  margin-top: 1em;
+.card {
+  position: relative;
+  display: flex;
+  height: 9em;
 }
 
-.card {
-  /*position: absolute;*/
+.card figure {
+  position: absolute;
+  flex: 0 1 auto;
+  height: 100%;
+  width: 100%;
+
+}
+
+.playerCards img {
+  max-height: 9em;
+  max-width: 6em;
+
+}
+.deck img,
+.discard img {
+  height: 9em;
+  width: 6em;
+  margin-top: 1em;
+
 }
 
 .face {
@@ -195,4 +209,15 @@ justify-content: center;
 .back {
   -webkit-transform: rotateY(180deg);
   -webkit-backface-visibility: hidden;
+}
+
+
+.scoreBoard h3{
+  font-size: 1.5em;
+  margin-bottom: .5em;
+}
+
+.scoreBoard p{
+  font-size: 1em;
+  margin-bottom: 2em;
 }
