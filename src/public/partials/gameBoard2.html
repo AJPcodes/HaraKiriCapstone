@@ -1,6 +1,11 @@
 <div id='gameBoard2'>
 
 	<div id="leftSidebar">
+		<section class="controls">
+			<h3>Options</h3>
+			<h4 ng-click='gameCtrl.deal()' class="hoverButton">Deal</h4>
+
+		</section>
 
 		<section class="scoreBoard">
 			<h3>{{gameCtrl.player1.name}}</h3>
@@ -10,10 +15,10 @@
 			<p>Score: {{gameCtrl.player2.score}}</p>
 		</section>
 
-		<h2>Drawn Card</h2>
+		<h2>Selected Card</h2>
 		<section class="deck cardContainer">
 	  	  <figure class="face">
-					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+					<img src="{{gameCtrl.selectedCard[0].images.png}}" alt="Selected Card">
 	  	  </figure>
 	   	 	<figure class="back">
 				</figure>
@@ -23,26 +28,26 @@
 
 	<div id="playerBoards">
 
-		<section class="playerDisplay">
-			<h2>{{gameCtrl.player1.name}}</h2>
-		</section>
+			<section class="playerDisplay">
+				<h2>{{gameCtrl.player1.name}}</h2>
+			</section>
 
-		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player1.cards">
-			<div class="card" ng-click='gameCtrl.flipCard("player1", $index)' id='player1{{$index}}'>
-	  	  <figure class="face">
-					<img src="{{card.images.png}}" alt="card.code">
-	  	  </figure>
-	   	 	<figure class="back">
-					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
-				</figure>
-			</div>
- 		</section>
+			<section class="player1Cards playerCards cardContainer" ng-repeat="card in gameCtrl.player1.cards">
+				<div class="card player1 {{card.flipped}}" ng-click='gameCtrl.flipCard("player1", $index)' id='player1{{$index}}'>
+		  	  <figure class="face">
+						<img src="{{card.images.png}}" alt="card.code">
+		  	  </figure>
+		   	 	<figure class="back">
+						<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+					</figure>
+				</div>
+	 		</section>
 
-		<section class="playerDisplay">
+		<section class="playerDisplay player2">
 			<h2>{{gameCtrl.player2.name}}</h2>
 		</section>
-		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player2.cards">
-			<div class="card" ng-click='gameCtrl.flipCard("player2", $index)' id='player2{{$index}}'>
+		<section class="player2Cards playerCards cardContainer" ng-repeat="card in gameCtrl.player2.cards">
+			<div class="card player2 {{card.flipped}}" ng-click='gameCtrl.flipCard("player2", $index)' id='player2{{$index}}'>
 	  	  <figure class="face">
 					<img src="{{card.images.png}}" alt="card.code">
 	  	  </figure>
@@ -58,7 +63,7 @@
 	<div id="rightSidebar">
 		<h2>Deck</h2>
 
-		<section class="deck cardContainer">
+		<section class="deck cardContainer" ng-click="gameCtrl.selectCard('deck')">
 	  	  <figure class="face">
 					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
 	  	  </figure>
@@ -66,9 +71,9 @@
 
  		<h2>Discard</h2>
 
- 		<section class="discard cardContainer" >
+ 		<section class="discard cardContainer" ng-click="gameCtrl.selectCard('discard')">
 	  	  <figure class="face">
-					<img src="{{gameCtrl.deck.cards[0].images.png}}" alt="gameCtrl.deck.cards[0].code">
+					<img src="{{gameCtrl.discard[0].images.png}}" alt="Discard Pile">
 	  	  </figure>
 
  		</section>

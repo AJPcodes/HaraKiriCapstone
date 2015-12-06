@@ -79,7 +79,7 @@ div#welcome {
 }
 
 .hoverButton:hover {
-	color: red;
+	color: blue;
 }
 
 
@@ -190,10 +190,14 @@ justify-content: center;
 
 }
 */
+
 .flipped {
   -webkit-transform: rotateY(180deg);
 }
 
+.active {
+  border: 3px solid blue;
+}
 .card figure {
   position: absolute;
   flex: 0 1 auto;
@@ -230,12 +234,16 @@ justify-content: center;
 }
 
 
-.scoreBoard h3{
+.scoreBoard h3,
+.controls h3 {
   font-size: 1.5em;
   margin-bottom: .5em;
 }
 
-.scoreBoard p{
+.scoreBoard p,
+.controls p{
   font-size: 1em;
   margin-bottom: 2em;
 }
+
+
