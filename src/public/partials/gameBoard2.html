@@ -28,7 +28,7 @@
 		</section>
 
 		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player1.cards">
-			<div class="card">
+			<div class="card" ng-click='gameCtrl.flipCard("player1", $index)' id='player1{{$index}}'>
 	  	  <figure class="face">
 					<img src="{{card.images.png}}" alt="card.code">
 	  	  </figure>
@@ -42,7 +42,7 @@
 			<h2>{{gameCtrl.player2.name}}</h2>
 		</section>
 		<section class="playerCards cardContainer" ng-repeat="card in gameCtrl.player2.cards">
-			<div class="card">
+			<div class="card" ng-click='gameCtrl.flipCard("player2", $index)' id='player2{{$index}}'>
 	  	  <figure class="face">
 					<img src="{{card.images.png}}" alt="card.code">
 	  	  </figure>
@@ -70,9 +70,7 @@
 	  	  <figure class="face">
 					<img src="{{gameCtrl.deck.cards[0].images.png}}" alt="gameCtrl.deck.cards[0].code">
 	  	  </figure>
-	   	 	<figure class="back">
-					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
-				</figure>
+
  		</section>
 
 

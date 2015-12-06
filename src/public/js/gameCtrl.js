@@ -1,6 +1,12 @@
 //controller for the add song form
 app.controller('GameCtrl',['$rootScope', function($rootScope) {
 
+	this.flipCard = function(player, index){
+
+		$('#'+player+index).toggleClass('flipped');
+	};
+
+
 	this.deckStyle = "http://www.cheetahplayingcards.com/images/cheetah-card.gif";
 
 	this.player1 = {
