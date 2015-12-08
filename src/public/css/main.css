@@ -153,6 +153,7 @@ justify-content: center;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  height: 100%;
 }
 
 #rightSidebar {
@@ -195,8 +196,10 @@ justify-content: center;
   -webkit-transform: rotateY(180deg);
 }
 
-.active {
-  border: 3px solid blue;
+.active h2 {
+  text-shadow: 3px 3px 5px white;
+  color: blue;
+  font-weight: 700;
 }
 .card figure {
   position: absolute;

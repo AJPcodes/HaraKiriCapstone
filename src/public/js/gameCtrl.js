@@ -23,13 +23,37 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 		cards: []
 	} //end player 2
 
-	this.currentPlayer = "player1";
+	this.turnsTaken = 0;
 	this.selectedCard = null;
 
+	this.changePlayer = function(){
+		if (this.turnsTaken%2 === 0 ) {
+			this.currentPlayer = this.player1;
+			$('.player1').addClass('active');
+			$('.player2').removeClass('active');
+
+		} else {
+			this.currentPlayer = this.player2;
+			$('.player2').addClass('active');
+			$('.player1').removeClass('active');
+		}
+	}
+
 	//function that flips a players's card at a specified index
-	this.flipCard = function(player, index){
-		console.log('Flipping:', player, index);
-		$('#'+player+index).toggleClass('flipped');
+	this.playCard = function(player, index, playerObj){
+		// console.log('Flipping:', player, index);
+		if (playerObj === this.currentPlayer && this.selectedCard != null) {
+
+			this.discard.unshift(playerObj.cards[index]);
+			playerObj.cards[index] = this.selectedCard.splice(0,1)[0];
+			playerObj.cards[index].flipped = "flipped";
+			this.selectedCard = null;
+			this.turnsTaken += 1;
+			this.changePlayer();
+
+		}
+
+		// $('#'+player+index).toggleClass('flipped');
 		this.checkStatus();
 	};
 
@@ -56,10 +80,10 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 		this.discard = this.deck.splice(0,1);
 		cardSrvs.prepareNewDeck();
-		console.log($('.'+this.currentPlayer));
 		}.bind(this);
 
 		dealCards();
+		this.changePlayer();
 
 	};
 
