@@ -6,7 +6,10 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 	//array that contains the current deck
 	this.deck = [];
 
-
+	//score values for all cards
+	this.cardValues = cardSrvs.getCardValues();
+// console.log(this.cardValues['AH']);
+	//round tracker
 	this.currentRound = 1;
 
 	this.player1 = {
@@ -21,9 +24,13 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 		cards: []
 	} //end player 2
 
+	//used to dermine who's turn it is
 	this.turnsTaken = 0;
+
+	//defaults to null until selected in play
 	this.selectedCard = null;
 
+	//used turns taken to determin who's turn it is.
 	this.changePlayer = function(){
 		if (this.turnsTaken%2 === 0 ) {
 			this.currentPlayer = this.player1;
@@ -35,9 +42,22 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 			$('.player2').addClass('active');
 			$('.player1').removeClass('active');
 		}
-	}
+	} //end change player
+
+	this.selectCard = function(pile){
+
+		if (this.selectedCard === null) {
+
+			if (pile === 'deck') {
+				this.selectedCard = this.deck.splice(0,1);
+			} else if (pile === 'discard') {
+				this.selectedCard = this.discard.splice(0,1);
+			}
+		}
+	}; //end selectCard
 
 	//function that flips a players's card at a specified index
+
 	this.playCard = function(player, index, playerObj){
 		// console.log('Flipping:', player, index);
 		if (playerObj === this.currentPlayer && this.selectedCard != null) {
@@ -60,15 +80,13 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 		// $('#'+player+index).toggleClass('flipped');
 	};
 
-	//check how many cards are flipper for each player
+	//check how many cards are flipper for each player to determine if game should end
 	this.checkStatus = function(){
 
-		console.log($('.player1Cards .flipped').length);
-		console.log($('.player2Cards .flipped').length);
-		if ($('.player2Cards .flipped').length === 6 || $('.player1Cards .flipped').length === 6)
-
-		this.scoreGame();
-
+		//when one player shows 6 flipped cards the round ends
+		if ($('.player2Cards .flipped').length === 6 || $('.player1Cards .flipped').length === 6) {
+		this.scoreRound();
+		}
 	};
 
 	//function to deal a new hand
@@ -90,233 +108,64 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 		dealCards();
 		this.changePlayer();
+		$('#dealButton').hide('slow');
+
 
 	};
 
-	this.selectCard = function(pile){
+	this.scoreRound = function() {
 
-		if (this.selectedCard === null) {
+		var score1 = 0;
+		var score2 = 0;
 
-			if (pile === 'deck') {
-				this.selectedCard = this.deck.splice(0,1);
-			} else if (pile === 'discard') {
-				this.selectedCard = this.discard.splice(0,1);
+		//add card scores for player 1
+		$.each(this.player1.cards, function(index, card){
+			// console.log(card);
+			card.flipped = "flipped";
+			score1 += this.cardValues[card.code].score;
+			console.log(score1);
+		}.bind(this));
+
+		//add score cards for player 2
+		$.each(this.player2.cards, function(index, card){
+			// console.log(card);
+			card.flipped = "flipped";
+			score2 += this.cardValues[card.code].score;
+
+			console.log(score1);
+		}.bind(this));
+
+		var checkMatch = function(card1, card2, score, cardValues) {
+			if (card1.value === card2.value) {
+				console.log('match!', card1.value);
+				console.log(score);
+				score -= cardValues[card1.code].score * 2;
+				return score
 			}
-		}
-	}; //end selectCard
+
+			return score
+		};
+
+		//check player 1 matches
+		score1 = checkMatch(this.player1.cards[0], this.player1.cards[3], score1, this.cardValues);
+		score1 = checkMatch(this.player1.cards[1], this.player1.cards[4], score1, this.cardValues);
+		score1 = checkMatch(this.player1.cards[2], this.player1.cards[5], score1, this.cardValues);
+
+		//check player 2 matches
+		score2 = checkMatch(this.player2.cards[0], this.player2.cards[3], score2, this.cardValues);
+		score2 = checkMatch(this.player2.cards[1], this.player2.cards[4], score2, this.cardValues);
+		score2 = checkMatch(this.player2.cards[2], this.player2.cards[5], score2, this.cardValues);
+
+		this.player1.score += score1;
+		this.player2.score += score2;
+		this.currentRound += 1;
+		$('#dealButton').show('slow');
+
+	};
 
 
 
-this.cardValues = {
-	"AH": {
-		type: "Ace",
-		score: 1,
-	},
-	"2H": {
-		type: "2",
-		score: -2,
-	},
-	"3H": {
-		type: "3",
-		score: 3,
-	},
-	"4H": {
-		type: "4",
-		score: 4,
-	},
-	"5H": {
-		type: "5",
-		score: 5,
-	},
-	"6H": {
-		type: "6",
-		score: 6,
-	},
-	"7H": {
-		type: "7",
-		score: 7,
-	},
-	"8H": {
-		type: "8",
-		score: 8,
-	},
-	"9H": {
-		type: "9",
-		score: 9,
-	},
-	"0H": {
-		type: "10",
-		score: 10,
-	},
-	"JH": {
-		type: "Jack",
-		score: 10,
-	},
-	"QH": {
-		type: "Queen",
-		score: 10,
-	},
-	"KH": {
-		type: "King",
-		score: 10,
-	},
-	"AD": {
-		type: "Ace",
-		score: 1,
-	},
-	"2D": {
-		type: "2",
-		score: -2,
-	},
-	"3D": {
-		type: "3",
-		score: 3,
-	},
-	"4D": {
-		type: "4",
-		score: 4,
-	},
-	"5D": {
-		type: "5",
-		score: 5,
-	},
-	"6D": {
-		type: "6",
-		score: 6,
-	},
-	"7D": {
-		type: "7",
-		score: 7,
-	},
-	"8D": {
-		type: "8",
-		score: 8,
-	},
-	"9D": {
-		type: "9",
-		score: 9,
-	},
-	"0D": {
-		type: "10",
-		score: 10,
-	},
-	"JD": {
-		type: "Jack",
-		score: 10,
-	},
-	"QD": {
-		type: "Queen",
-		score: 10,
-	},
-	"KD": {
-		type: "King",
-		score: 10,
-	},
-	"AC": {
-		type: "Ace",
-		score: 1,
-	},
-	"2C": {
-		type: "2",
-		score: -2,
-	},
-	"3C": {
-		type: "3",
-		score: 3,
-	},
-	"4C": {
-		type: "4",
-		score: 4,
-	},
-	"5C": {
-		type: "5",
-		score: 5,
-	},
-	"6C": {
-		type: "6",
-		score: 6,
-	},
-	"7C": {
-		type: "7",
-		score: 7,
-	},
-	"8C": {
-		type: "8",
-		score: 8,
-	},
-	"9C": {
-		type: "9",
-		score: 9,
-	},
-	"0C": {
-		type: "10",
-		score: 10,
-	},
-	"JC": {
-		type: "Jack",
-		score: 10,
-	},
-	"QC": {
-		type: "Queen",
-		score: 10,
-	},
-	"KC": {
-		type: "King",
-		score: 10,
-	},
-	"AS": {
-		type: "Ace",
-		score: 1,
-	},
-	"2S": {
-		type: "2",
-		score: -2,
-	},
-	"3S": {
-		type: "3",
-		score: 3,
-	},
-	"4S": {
-		type: "4",
-		score: 4,
-	},
-	"5S": {
-		type: "5",
-		score: 5,
-	},
-	"6S": {
-		type: "6",
-		score: 6,
-	},
-	"7S": {
-		type: "7",
-		score: 7,
-	},
-	"8S": {
-		type: "8",
-		score: 8,
-	},
-	"9S": {
-		type: "9",
-		score: 9,
-	},
-	"0S": {
-		type: "10",
-		score: 10,
-	},
-	"JS": {
-		type: "Jack",
-		score: 10,
-	},
-	"QS": {
-		type: "Queen",
-		score: 10,
-	},
-	"KS": {
-		type: "King",
-		score: 10,
-	}
-}
+
 
 }]); //end optionsCtrl
 
