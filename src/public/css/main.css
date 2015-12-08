@@ -1,8 +1,10 @@
-/* http://meyerweb.com/eric/tools/css/reset/
+/* sassy variables */
+/*
+  CSS Reset
+ http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -16,136 +18,117 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;
-}
+  display: block; }
+
 body {
-	line-height: 1;
-}
+  line-height: 1; }
+
 ol, ul {
-	list-style: none;
-}
+  list-style: none; }
+
 blockquote, q {
-	quotes: none;
-}
+  quotes: none; }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
-}
+  content: '';
+  content: none; }
+
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
+  border-collapse: collapse;
+  border-spacing: 0; }
 
 /*Fonts*/
-
 /*@import url(https://fonts.googleapis.com/css?family=Orbitron:400,700);*/
-
 /*//Welcome page styles//*/
 body {
-	background-color: red;
-	font-family: 'Orbitron', sans-serif;
-	text-align: center;
-}
-
+  background-color: #cd0010;
+  font-family: "Orbitron", sans-serif;
+  color: black;
+  text-align: center; }
 
 div#welcome {
-	margin: 10% 15%;
-	background-color: white;
-	height: 80%;
-	border-radius: 5px;
-
-}
+  margin: 10% 15%;
+  background-color: rgba(67, 62, 57, 0.9);
+  height: 80%;
+  border-radius: 5px;
+  border: 3px solid rgba(234, 210, 172, 0.9); }
 
 #welcome h1,
-#welcome h2{
-	font-size: 3em;
-	font-weight: 700;
-	margin: 5%;
-}
+#welcome h2 {
+  font-size: 3em;
+  font-weight: 700;
+  margin: 5%;
+  text-shadow: 1px 1px 5px rgba(234, 210, 172, 0.9); }
 
-#welcome h2{
-	font-size: 2em;
-}
+#welcome h2 {
+  font-size: 2em; }
 
 .hoverButton:hover {
-	color: blue;
-}
-
+  color: rgba(234, 210, 172, 0.9); }
 
 #optionsContainer {
   margin: 10% auto;
   width: 200px;
   height: 260px;
   position: relative;
-  perspective: 800;
-}
+  perspective: 800; }
 
 #optionsCard {
   position: absolute;
   -webkit-transform-style: preserve-3d;
   -webkit-transition: -webkit-transform 1s;
-  transform-origin: (50% 50%);
-}
+  transform-origin: 50% 50%; }
 
 #optionsCard {
   border-radius: 16px;
   border: 5px solid black;
   width: 100%;
-  height: 100%;
-}
+  height: 100%; }
 
 #optionsCard figure {
   margin: 0;
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden;
-}
-
+  -webkit-backface-visibility: hidden; }
 
 #optionsCard .face {
-  background: url('http://www.cheetahplayingcards.com/images/cheetah-card.gif');
+  background: url("http://www.cheetahplayingcards.com/images/cheetah-card.gif");
   background-size: 100% 100%;
   border-radius: 9px;
-  border: 3px solid black;
-}
+  border: 3px solid black; }
 
 #optionsCard .back {
   border-radius: 9px;
   background-size: 100% 100%;
-  -webkit-transform: rotateY(180deg);
-}
+  -webkit-transform: rotateY(180deg); }
 
-#optionsCard:hover {-webkit-transform: rotateY(180deg);
-}
-
+#optionsCard:hover {
+  -webkit-transform: rotateY(180deg); }
 
 /*Styles for gameboard*/
-
 #gameBoard2 {
-display: flex;
-flex-flow: row nowrap;
-justify-content: center;
-}
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center; }
 
 #leftSidebar {
   flex-grow: 1;
   width: 15%;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
-}
+  justify-content: center; }
 
 #playerBoards {
   flex-grow: 5;
@@ -153,37 +136,30 @@ justify-content: center;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  height: 100%;
-}
+  height: 100%; }
 
 #rightSidebar {
   flex-grow: 2;
   width: 20%;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
-
-}
-
+  justify-content: center; }
 
 .playerDisplay {
   width: 95%;
-  line-height: 3em;
-}
+  line-height: 3em; }
 
 .playerCards {
   flex-grow: 1;
-  width: 30%;
-}
+  width: 30%; }
 
 .card {
   position: relative;
   display: flex;
-  height: 9em;
+  height: 7em;
   -webkit-transform-style: preserve-3d;
   -webkit-transition: -webkit-transform 1s;
-  transform-origin: (50% 50%);
-}
+  transform-origin: 50% 50%; }
 
 /*.card:hover {
 
@@ -191,62 +167,48 @@ justify-content: center;
 
 }
 */
-
 .flipped {
-  -webkit-transform: rotateY(180deg);
-}
+  -webkit-transform: rotateY(180deg); }
 
 .active h2 {
-  text-shadow: 3px 3px 5px white;
-  color: blue;
-  font-weight: 700;
-}
+  text-shadow: 1px 1px 2px rgba(234, 210, 172, 0.9);
+  color: rgba(234, 210, 172, 0.9);
+  font-weight: 700; }
+
 .card figure {
   position: absolute;
   flex: 0 1 auto;
   height: 100%;
-  width: 100%;
-
-}
+  width: 100%; }
 
 .playerCards img {
-  max-height: 9em;
-  max-width: 6em;
-  box-shadow: 2px 2px 5px black;
-}
-
+  max-height: 7em;
+  max-width: 4.5em;
+  box-shadow: 2px 2px 5px black; }
 
 .deck img,
 .discard img {
   height: 9em;
   width: 6em;
   margin-top: 1em;
-  box-shadow: 2px 2px 5px black;
-
-}
+  box-shadow: 2px 2px 5px black; }
 
 .playerCards .face {
   -webkit-backface-visibility: hidden;
-  -webkit-transform: rotateY(180deg);
-
-}
-
+  -webkit-transform: rotateY(180deg); }
 
 .playerCards .back {
-  -webkit-backface-visibility: hidden;
-}
-
+  -webkit-backface-visibility: hidden; }
 
 .scoreBoard h3,
 .controls h3 {
   font-size: 1.5em;
   margin-bottom: .5em;
-}
+  text-shadow: 1px 1px 2px rgba(234, 210, 172, 0.9); }
 
 .scoreBoard p,
-.controls p{
+.controls p {
   font-size: 1em;
-  margin-bottom: 2em;
-}
+  margin-bottom: 2em; }
 
-
+/*# sourceMappingURL=main.css.map */

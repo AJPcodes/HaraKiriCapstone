@@ -27,7 +27,7 @@ $http({
     console.log(response);
    });
 
-} //end getNewDeck
+}; //end getNewDeck
 
 generateDeck();
 
@@ -240,7 +240,7 @@ var cardValues = {
     type: "King",
     score: 10,
   }
-}
+};
 
 
   return {

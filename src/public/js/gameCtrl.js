@@ -16,13 +16,13 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 		name: "Player 1",
 		score: 0,
 		cards: []
-	} //end player 1
+	}; //end player 1
 
 	this.player2 = {
 		name: "Player 2",
 		score: 0,
 		cards: []
-	} //end player 2
+	}; //end player 2
 
 	//used to dermine who's turn it is
 	this.turnsTaken = 0;
@@ -42,7 +42,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 			$('.player2').addClass('active');
 			$('.player1').removeClass('active');
 		}
-	} //end change player
+	}; //end change player
 
 	this.selectCard = function(pile){
 
@@ -60,7 +60,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 	this.playCard = function(player, index, playerObj){
 		// console.log('Flipping:', player, index);
-		if (playerObj === this.currentPlayer && this.selectedCard != null) {
+		if (playerObj === this.currentPlayer && this.selectedCard !== null) {
 
 			//add card to discard pile
 			this.discard.unshift(playerObj.cards[index]);
@@ -140,10 +140,10 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 				console.log('match!', card1.value);
 				console.log(score);
 				score -= cardValues[card1.code].score * 2;
-				return score
+				return score;
 			}
 
-			return score
+			return score;
 		};
 
 		//check player 1 matches

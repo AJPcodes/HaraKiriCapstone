@@ -14,7 +14,7 @@ app.config(['$routeProvider', function($routeProvider){
 		.when('/play2', {
 			templateUrl: './static/partials/gameboard2.html',
 			controller: 'GameCtrl as gameCtrl'
-		})
+		});
 
 	// 	.when('/songs/list', {
 	// 		templateUrl: 'partials/songList.html',
