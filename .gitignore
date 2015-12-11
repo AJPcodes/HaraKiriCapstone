@@ -3,3 +3,4 @@ src/public/bower_components
 Gruntfile.js
 sass
 src/public/css/main.css.map
+.sass-cache
