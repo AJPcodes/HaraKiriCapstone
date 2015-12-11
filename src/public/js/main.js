@@ -11,8 +11,8 @@ app.config(['$routeProvider', function($routeProvider){
 			templateUrl: './static/partials/welcome.html',
 			controller: 'OptionsCtrl as optionsCtrl'
 		})
-		.when('/play2', {
-			templateUrl: './static/partials/gameboard2.html',
+		.when('/play', {
+			templateUrl: './static/partials/gameBoard.html',
 			controller: 'GameCtrl as gameCtrl'
 		});
 

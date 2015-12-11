@@ -1,7 +1,7 @@
 app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, cardSrvs, $q) {
 
 	//card-back style
-	this.deckStyle = "http://www.cheetahplayingcards.com/images/cheetah-card.gif";
+	this.deckStyle = "./static/img/cardBacks/cheetah.gif";
 
 	//array that contains the current deck
 	this.deck = [];

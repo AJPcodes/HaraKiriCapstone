@@ -8,7 +8,7 @@ app.controller('OptionsCtrl',['$rootScope', "$location", function($rootScope, $l
 	this.startGame = function(){
 
 		if (this.numPlayers === 2) {
-		$location.path( "/play2");
+		$location.path( "/play");
 		}
 
 	};
