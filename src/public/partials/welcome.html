@@ -2,14 +2,59 @@
 	<h1>Welcome to Harakiri</h1>
 	<div class="cardContainer" id="optionsContainer">
     <div class="card"  id="optionsCard">
-	    <figure class="face">
-
+	    <figure class="face" ng-click="optionsCtrl.animateCards()">
+				<img src="{{optionsCtrl.deckStyle}}" alt="cardBack">
 	    </figure>
-	    <figure class="back">
-				<h2>Options</h2>
-				<h2 type="h2" ng-click="optionsCtrl.startGame()" class="hoverButton">Play</h2>
+	    <figure class="back" id="card1">
+	    	<h2 type="h2" ng-click="optionsCtrl.showOptions()" class="hoverButton">Options</h2>
+				<h2 type="h2" ng-click="optionsCtrl.showRules()" class="hoverButton">Rules</h2>
+				<h2 type="h2" ng-click="optionsCtrl.startGame()" class="hoverButton">Start</h2>
+	    </figure>
+
+	    <figure class="back" id="card2">
+
+				<!-- <h2 type="h2" ng-click="optionsCtrl.startGame()" class="hoverButton">Play</h2> -->
+	    </figure>
+
+	    <figure class="back" id="card3">
+
+				<!-- <h2 type="h2" ng-click="optionsCtrl.startGame()" class="hoverButton">Play</h2> -->
 	    </figure>
 
     </div>
   </div>
+</div>
+<div id='options'>
+	<h1>Options</h1>
+	<h2>Number of Players</h2>
+	<p>
+		<span ng-show="optionsCtrl.numPlayers===2" class='selected'>2</span>
+		<span ng-hide="optionsCtrl.numPlayers===2" class='hoverButton' ng-click="optionsCtrl.selectPlayers(2)">2</span>
+
+		<span ng-show="optionsCtrl.numPlayers===3" class='selected'>3</span>
+		<span ng-hide="optionsCtrl.numPlayers===3" class='hoverButton' ng-click="optionsCtrl.selectPlayers(3)">3</span>
+
+		<span ng-show="optionsCtrl.numPlayers===4" class='selected'>4</span>
+		<span ng-hide="optionsCtrl.numPlayers===4" class='hoverButton' ng-click="optionsCtrl.selectPlayers(4)">4</span>
+
+
+	</p>
+	<h2>Player Names</h2>
+	<div ng-repeat="player in optionsCtrl.players">
+		<p>
+			{{player.name}}
+		</p>
+		<input type="text" ng-model='player.name'>
+	</div>
+	<h2>Deck Style</h2>
+	<img id='chosenStyle' src="{{optionsCtrl.deckStyle}}" alt="cardBack">
+
+	<div id="cardStyles">
+	  <figure ng-repeat="style in optionsCtrl.deckStyles">
+			<img src="{{style}}" style="transform: rotate({{-45 + $index * 15}}deg); transform-origin: left bottom;" alt="cardBack" ng-click="optionsCtrl.selectDeck(style)">
+    </figure>
+
+	</div>
+
+	<h3 class="hoverButton"  ng-click='optionsCtrl.hideOptions()'>Exit</h3>
 </div>

@@ -57,7 +57,11 @@ body {
   color: black;
   text-align: center; }
 
-div#welcome {
+div#options {
+  display: none; }
+
+div#welcome,
+div#options {
   margin: 10% 15%;
   background-color: rgba(67, 62, 57, 0.9);
   height: 80%;
@@ -77,6 +81,49 @@ div#welcome {
 .hoverButton:hover {
   color: rgba(234, 210, 172, 0.9); }
 
+div#welcome img {
+  height: 100%;
+  width: 100%; }
+
+div#options img {
+  height: 10em;
+  width: 7em;
+  box-shadow: 3px 3px 5px black; }
+
+div#options img#chosenStyle {
+  margin: 4em; }
+
+div#options h1,
+div#options h2 {
+  margin: 1em; }
+
+div#options h1 {
+  font-size: 3em; }
+
+div#options h2 {
+  font-size: 2em; }
+
+div#options span.selected {
+  font-size: 2em;
+  color: #cd0010; }
+
+div#cardStyles {
+  display: inline-block;
+  margin: 4em;
+  transform-origin: 50% 50%;
+  border-radius: 16px;
+  height: 10em;
+  width: 7em; }
+
+#cardStyles figure {
+  margin: 0;
+  position: absolute;
+  width: 0;
+  height: 0; }
+
+#cardStyles figure img {
+  border: 3px solid rgba(234, 210, 172, 0.9); }
+
 #optionsContainer {
   margin: 10% auto;
   width: 200px;
@@ -87,12 +134,9 @@ div#welcome {
 #optionsCard {
   position: absolute;
   -webkit-transform-style: preserve-3d;
-  -webkit-transition: -webkit-transform 1s;
-  transform-origin: 50% 50%; }
-
-#optionsCard {
+  -webkit-transition: -webkit-transform 2s;
+  transform-origin: 50% 50%;
   border-radius: 16px;
-  border: 5px solid black;
   width: 100%;
   height: 100%; }
 
@@ -101,27 +145,61 @@ div#welcome {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden; }
+  -webkit-backface-visibility: hidden;
+  border: 3px solid rgba(234, 210, 172, 0.9);
+  box-shadow: 3px 3px 5px black; }
 
 #optionsCard .face {
-  background: url("http://www.cheetahplayingcards.com/images/cheetah-card.gif");
+  background: #cd0010;
   background-size: 100% 100%;
-  border-radius: 9px;
-  border: 3px solid black; }
+  border-radius: 9px; }
 
 #optionsCard .back {
+  background: #454955;
   border-radius: 9px;
   background-size: 100% 100%;
   -webkit-transform: rotateY(180deg); }
 
-#optionsCard:hover {
-  -webkit-transform: rotateY(180deg); }
+#optionsCard #card1 {
+  z-index: 10 !important; }
+
+#optionsCard #card1.fan {
+  transition: transform 2s;
+  transform: rotateY(180deg) rotate(5deg) translateZ(-1em);
+  transform-origin: center bottom; }
+
+#optionsCard #card2 {
+  z-index: 9 !important;
+  background-image: url("../img/cards/AH.png"); }
+
+#optionsCard #card2.fan {
+  transition: transform 2s;
+  transform: rotateY(180deg) rotate(-5deg) translateZ(-2em);
+  transform-origin: center bottom; }
+
+#optionsCard #card3 {
+  z-index: 8 !important;
+  background-image: url("../img/cards/AS.png"); }
+
+#optionsCard #card3.fan {
+  transition: transform 2s;
+  transform: rotateY(180deg) rotate(-15deg) translateZ(-3em);
+  transform-origin: center bottom; }
+
+.rotated {
+  -webkit-transform: rotateY(540deg); }
 
 /*Styles for gameboard*/
-#gameBoard2 {
+#gameBoard {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center; }
+  justify-content: center;
+  width: 90%;
+  height: 90%;
+  margin: 5%;
+  background-color: rgba(67, 62, 57, 0.9);
+  border: 3px solid rgba(234, 210, 172, 0.9);
+  border-radius: 6px; }
 
 #leftSidebar {
   flex-grow: 1;
@@ -184,7 +262,8 @@ div#welcome {
 }
 */
 .flipped {
-  -webkit-transform: rotateY(180deg); }
+  transition: transform 2s;
+  transform: rotateY(180deg); }
 
 .matched img {
   border: 3px solid rgba(67, 62, 57, 0.9); }
