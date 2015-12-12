@@ -10,19 +10,38 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 	this.cardValues = cardSrvs.getCardValues();
 // console.log(this.cardValues['AH']);
 	//round tracker
-	this.currentRound = 1;
+	this.currentRound = 9;
 
-	this.player1 = {
+	this.players = [
+	{
 		name: "Player 1",
 		score: 0,
 		cards: []
-	}; //end player 1
-
-	this.player2 = {
+	},
+	{
 		name: "Player 2",
 		score: 0,
 		cards: []
-	}; //end player 2
+	},
+	{
+		name: "Player 3",
+		score: 0,
+		cards: []
+	},
+	{
+		name: "Player 4",
+		score: 0,
+		cards: []
+	}
+
+	];
+
+	this.player1 = this.players[0];//end player 1
+	this.player2 = this.players[1];//end player 1
+	this.player3 = this.players[2];//end player 1
+	this.player4 = this.players[3];//end player 1
+
+
 
 	//used to dermine who's turn it is
 	this.turnsTaken = 0;
@@ -32,16 +51,9 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 	//used turns taken to determin who's turn it is.
 	this.changePlayer = function(){
-		if (this.turnsTaken%2 === 0 ) {
-			this.currentPlayer = this.player1;
-			$('.player1').addClass('active');
-			$('.player2').removeClass('active');
 
-		} else {
-			this.currentPlayer = this.player2;
-			$('.player2').addClass('active');
-			$('.player1').removeClass('active');
-		}
+			this.currentPlayer = this.players[this.turnsTaken % this.players.length];
+
 	}; //end change player
 
 	this.selectCard = function(pile){
@@ -53,6 +65,17 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 			} else if (pile === 'discard') {
 				this.selectedCard = this.discard.splice(0,1);
 			}
+		} else if (pile == 'discard' && this.selectedCard != null) {
+
+			//add card to discard pile
+			this.discard.unshift(this.selectedCard[0]);
+			//reset 'flipped' status
+			this.discard[0].flipped = null;
+
+			this.selectedCard = null;
+			this.turnsTaken += 1;
+			//change to next player's turn
+			this.changePlayer();
 		}
 	}; //end selectCard
 
@@ -60,7 +83,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 	this.playCard = function(player, index, playerObj){
 		// console.log('Flipping:', player, index);
-		if (playerObj === this.currentPlayer && this.selectedCard !== null) {
+		if (playerObj === this.currentPlayer && this.selectedCard !== null && playerObj.cards[index].matched != 'matched') {
 
 			//add card to discard pile
 			this.discard.unshift(playerObj.cards[index]);
@@ -69,6 +92,20 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 			playerObj.cards[index] = this.selectedCard.splice(0,1)[0];
 			playerObj.cards[index].flipped = "flipped";
+
+			//check if the cards match
+			var checkMatch = function(card1, card2, score, cardValues) {
+				if (card1.value === card2.value) {
+					console.log('match!', card1.value);
+					card1.matched = 'matched';
+					card2.matched = 'matched';
+
+				}
+			};
+
+			checkMatch(playerObj.cards[index], playerObj.cards[(index+3)%6], this.cardValues);
+
+
 			this.selectedCard = null;
 			this.turnsTaken += 1;
 			//change to next player's turn
@@ -80,27 +117,65 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 		// $('#'+player+index).toggleClass('flipped');
 	};
 
+	this.discardCard = function(){
+
+			if (this.selectedCard != null) {
+
+			//add card to discard pile
+			this.discard.unshift(this.selectedCard);
+			//reset 'flipped' status
+			this.discard[0].flipped = null;
+
+			this.selectedCard = null;
+			this.turnsTaken += 1;
+			//change to next player's turn
+			this.changePlayer();
+		}
+
+	};
+
+
+
 	//check how many cards are flipper for each player to determine if game should end
 	this.checkStatus = function(){
 
-		//when one player shows 6 flipped cards the round ends
-		if ($('.player2Cards .flipped').length === 6 || $('.player1Cards .flipped').length === 6) {
-		this.scoreRound();
+			var roundOver = false;
+		this.players.forEach(function(player){
+
+			var numFlipped = 0;
+			player.cards.forEach(function(card){
+
+		//when one player has 6 flipped cards the round ends
+				if (card.flipped === "flipped")
+					numFlipped++;
+				if (numFlipped === 6) {
+					roundOver = true;
+				}
+
+			});
+
+			}.bind(this));
+
+		if (roundOver) {
+			this.scoreRound();
 		}
 	};
 
 	//function to deal a new hand
 	this.deal = function(){
+
 		var dealCards = function(){
 		this.deck = cardSrvs.getNewDeck();
 		this.selectedCard = null;
-		this.player1.cards = this.deck.splice(0,6);
-		this.player2.cards = this.deck.splice(0,6);
 
-		for (i=0; i<3;i++) {
-			this.player1.cards[i].flipped = "flipped";
-			this.player2.cards[i].flipped = "flipped";
-		}
+		//deal three cards to each player, 2 face up
+		this.players.forEach(function(player){
+				player.cards = this.deck.splice(0,6);
+			for (i=0; i<2;i++) {
+				player.cards[i].flipped = "flipped";
+			}
+		}.bind(this));
+
 
 		this.discard = this.deck.splice(0,1);
 		cardSrvs.prepareNewDeck();
@@ -115,60 +190,50 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 	this.scoreRound = function() {
 
-		var score1 = 0;
-		var score2 = 0;
+			$('#dealButton').show('slow');
 
-		//add card scores for player 1
-		$.each(this.player1.cards, function(index, card){
-			// console.log(card);
-			card.flipped = "flipped";
-			score1 += this.cardValues[card.code].score;
-			console.log(score1);
-		}.bind(this));
+		$.each(this.players, function(index, player){
 
-		//add score cards for player 2
-		$.each(this.player2.cards, function(index, card){
-			// console.log(card);
-			card.flipped = "flipped";
-			score2 += this.cardValues[card.code].score;
+			var score = 0;
 
-			console.log(score1);
-		}.bind(this));
+			$.each(player.cards, function(index, card){
+				// console.log(card);
+				// console.log(card);
+				card.flipped = "flipped";
+				if(card.matched != 'matched') {
+				score += this.cardValues[card.code].score;
+				}
 
-		var checkMatch = function(card1, card2, score, cardValues) {
-			if (card1.value === card2.value) {
-				console.log('match!', card1.value);
-				console.log(score);
-				score -= cardValues[card1.code].score * 2;
-				return score;
+			}.bind(this));  //end flipped check
+
+			player.score += score;
+
+		}.bind(this)); //
+
+			this.currentRound += 1;
+			if (this.currentRound > 9) {
+			this.endGame();
 			}
 
-			return score;
-		};
+	};
 
-		//check player 1 matches
-		score1 = checkMatch(this.player1.cards[0], this.player1.cards[3], score1, this.cardValues);
-		score1 = checkMatch(this.player1.cards[1], this.player1.cards[4], score1, this.cardValues);
-		score1 = checkMatch(this.player1.cards[2], this.player1.cards[5], score1, this.cardValues);
+	this.endGame = function(){
 
-		//check player 2 matches
-		score2 = checkMatch(this.player2.cards[0], this.player2.cards[3], score2, this.cardValues);
-		score2 = checkMatch(this.player2.cards[1], this.player2.cards[4], score2, this.cardValues);
-		score2 = checkMatch(this.player2.cards[2], this.player2.cards[5], score2, this.cardValues);
+		var winner = this.player1;
+		this.players.forEach(function(player){
 
-		this.player1.score += score1;
-		this.player2.score += score2;
-		this.currentRound += 1;
-		$('#dealButton').show('slow');
+			if (player.score > winner.score) {
+				winner = player;
+			}
+
+		});
+
+		alert('The winner is: ' + winner.name);
 
 	};
 
 
-
-
-
-}]); //end optionsCtrl
-
+}]); //end gameCtrl
 
 
 

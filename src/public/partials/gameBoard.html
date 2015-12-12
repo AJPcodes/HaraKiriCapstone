@@ -14,45 +14,31 @@
 			<h3>{{gameCtrl.player2.name}}</h3>
 			<p>Score: {{gameCtrl.player2.score}}</p>
 
+			<h3 ng-show='gameCtrl.player3'>{{gameCtrl.player3.name}}</h3>
+			<p ng-show='gameCtrl.player3'>Score: {{gameCtrl.player3.score}}</p>
+
+			<h3 ng-show='gameCtrl.player4'>{{gameCtrl.player4.name}}</h3>
+			<p ng-show='gameCtrl.player4'>Score: {{gameCtrl.player4.score}}</p>
+
 			<h3>Current Round:</h3>
 			<p>{{gameCtrl.currentRound}}</p>
 		</section>
 
 	</div>
 
-	<div id="playerBoards">
+	<div id="middleSection">
 
-			<section class="playerDisplay  player1">
-				<h2>{{gameCtrl.player1.name}}</h2>
-			</section>
+	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="playerBoards" ng-hide="gameCtrl.currentPlayer === gameCtrl.player1"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="playerBoards" ng-hide="gameCtrl.currentPlayer === gameCtrl.player2"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player3grid.html'" class="playerBoards" ng-hide="gameCtrl.currentPlayer === gameCtrl.player3"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player4grid.html'" class="playerBoards" ng-hide="gameCtrl.currentPlayer === gameCtrl.player4"></ng-include>
 
-			<section class="player1Cards playerCards cardContainer" ng-repeat="card in gameCtrl.player1.cards">
-				<div class="card {{card.flipped}}" ng-click='gameCtrl.playCard("player1", $index, gameCtrl.player1)' id='player1{{$index}}'>
-		  	  <figure class="face">
-						<img src="./static/img/cards/{{card.code}}.png" alt="{{card.code}}">
-		  	  </figure>
-		   	 	<figure class="back">
-						<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
-					</figure>
-				</div>
-	 		</section>
+	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="currentPlayerBoard active" ng-show="gameCtrl.currentPlayer === gameCtrl.player1"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="currentPlayerBoard active" ng-show="gameCtrl.currentPlayer === gameCtrl.player2"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player3grid.html'" class="currentPlayerBoard active" ng-show="gameCtrl.currentPlayer === gameCtrl.player3"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player4grid.html'" class="currentPlayerBoard active" ng-show="gameCtrl.currentPlayer === gameCtrl.player4"></ng-include>
 
-		<section class="player2Cards playerCards cardContainer" ng-repeat="card in gameCtrl.player2.cards">
-			<div class="card {{card.flipped}}" ng-click='gameCtrl.playCard("player2", $index, gameCtrl.player2)' id='player2{{$index}}'>
-	  	  <figure class="face">
-					<img src="./static/img/cards/{{card.code}}.png" alt="{{card.code}}">
-	  	  </figure>
-	   	 	<figure class="back">
-					<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
-				</figure>
-			</div>
- 		</section>
-
-		<section class="playerDisplay player2">
-			<h2>{{gameCtrl.player2.name}}</h2>
-		</section>
-
-	</div> <!--end player boards -->
+	</div>
 
 	<div id="rightSidebar">
 		<h2>Deck</h2>

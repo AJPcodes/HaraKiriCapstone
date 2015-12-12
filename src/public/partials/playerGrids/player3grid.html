@@ -1,0 +1,14 @@
+<section class="playerDisplay  player3">
+	<h2>{{gameCtrl.player3.name}}</h2>
+</section>
+
+<section class="player3Cards playerCards cardContainer" ng-repeat="card in gameCtrl.player3.cards">
+	<div class="card {{card.flipped}}  {{card.matched}}" ng-click='gameCtrl.playCard("player3", $index, gameCtrl.player3)' id='player3{{$index}}'>
+	  <figure class="face">
+			<img src="./static/img/cards/{{card.code}}.png" alt="{{card.code}}">
+	  </figure>
+ 	 	<figure class="back">
+			<img src="{{gameCtrl.deckStyle}}" alt="Card Back">
+		</figure>
+	</div>
+</section>
