@@ -4,7 +4,7 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 	this.numPlayers = 2;
 	this.deckStyle = './static/img/cardBacks/blue.jpg';
 	this.deckStyles =['./static/img/cardBacks/cheetah.gif', './static/img/cardBacks/black.png', './static/img/cardBacks/blue.jpg','./static/img/cardBacks/brown.jpg','./static/img/cardBacks/orange.PNG'];
-
+	this.currentUserName = '';
 	this.players = [
 	{
 		name: "Player 1",
@@ -83,6 +83,10 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 
 	};
 
+socket.on('send:name', function(data) {
+	console.log(data);
+	this.currentUserName = data.name;
+}.bind(this));
 
 
 }]); //end optionsCtrl

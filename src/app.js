@@ -28,6 +28,8 @@ app.get('*', function(req, res){
 	res.render('index');
 });
 
+io.sockets.on('connection', require('./socket'));
+
 
 http.listen(3000, function() {
 	console.log("The frontend server is running on port 3000!");
