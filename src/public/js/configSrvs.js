@@ -11,16 +11,13 @@ this.deckStyle = '';
     newGame: function(){
       return {
         players: this.players,
-        deckStyle: this.deckstyle,
+        deckStyle: this.deckStyle,
       };
     },
 
-    setDeck: function(chosenDeck){
-      this.deckStyle = chosenDeck;
-    },
-
-    setPlayers: function(chosenPlayers){
-      this.players = chosenPlayers;
+    setUpGame: function(gameDetails){
+      this.players = gameDetails.players;
+      this.deckStyle = gameDetails.deckStyle;
     }
 
   }; //end return

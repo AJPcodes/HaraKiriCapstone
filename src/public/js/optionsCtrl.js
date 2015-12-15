@@ -1,8 +1,8 @@
 //controller for the add song form
-app.controller('OptionsCtrl',['$rootScope', "$location", function($rootScope, $location) {
+app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', function($rootScope, $location, config) {
 
 	this.numPlayers = 2;
-	this.deckStyle = './static/img/cardBacks/cheetah.gif';
+	this.deckStyle = './static/img/cardBacks/blue.jpg';
 	this.deckStyles =['./static/img/cardBacks/cheetah.gif', './static/img/cardBacks/black.png', './static/img/cardBacks/blue.jpg','./static/img/cardBacks/brown.jpg','./static/img/cardBacks/orange.PNG'];
 
 	this.players = [
@@ -63,21 +63,23 @@ app.controller('OptionsCtrl',['$rootScope', "$location", function($rootScope, $l
 				name: "Player " + i,
 				score: 0,
 				cards: []
-				}
-			)
+				});
 		}
 	};
 
 	this.selectDeck = function(chosenDeck){
 		console.log(chosenDeck);
 		this.deckStyle = chosenDeck;
-	}
+	};
 
 	this.startGame = function(){
 
-		if (this.numPlayers === 2) {
+		config.setUpGame({
+			players: this.players,
+			deckStyle: this.deckStyle
+		});
 		$location.path( "/play");
-		}
+
 
 	};
 

@@ -1,7 +1,7 @@
-app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, cardSrvs, $q) {
+app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', function($rootScope, cardSrvs, config, $q) {
 
 	//card-back style
-	this.deckStyle = "./static/img/cardBacks/cheetah.gif";
+	this.deckStyle = config.newGame().deckStyle;
 
 	//array that contains the current deck
 	this.deck = [];
@@ -10,36 +10,11 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 	this.cardValues = cardSrvs.getCardValues();
 // console.log(this.cardValues['AH']);
 	//round tracker
-	this.currentRound = 9;
+	this.currentRound = 1;
 
-	this.players = [
-	{
-		name: "Player 1",
-		score: 0,
-		cards: []
-	},
-	{
-		name: "Player 2",
-		score: 0,
-		cards: []
-	},
-	{
-		name: "Player 3",
-		score: 0,
-		cards: []
-	},
-	{
-		name: "Player 4",
-		score: 0,
-		cards: []
-	}
+	this.players = [];
 
-	];
 
-	this.player1 = this.players[0];//end player 1
-	this.player2 = this.players[1];//end player 1
-	this.player3 = this.players[2];//end player 1
-	this.player4 = this.players[3];//end player 1
 
 
 
@@ -56,6 +31,22 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 	}; //end change player
 
+	this.startGame = function(){
+		gameData = config.newGame();
+		console.log(gameData);
+		this.players = gameData.players;
+		this.deckStyle = gameData.deckStyle;
+
+		this.player1 = this.players[0];//end player 1
+		this.player2 = this.players[1];//end player 1
+		this.player3 = this.players[2];//end player 1
+		this.player4 = this.players[3];//end player 1
+
+		$('#startButton').hide();
+		$('#dealButton').show();
+
+	};
+
 	this.selectCard = function(pile){
 
 		if (this.selectedCard === null) {
@@ -65,7 +56,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 			} else if (pile === 'discard') {
 				this.selectedCard = this.discard.splice(0,1);
 			}
-		} else if (pile == 'discard' && this.selectedCard != null) {
+		} else if (pile == 'discard' && this.selectedCard !== null) {
 
 			//add card to discard pile
 			this.discard.unshift(this.selectedCard[0]);
@@ -95,8 +86,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 			//check if the cards match
 			var checkMatch = function(card1, card2, score, cardValues) {
-				if (card1.value === card2.value) {
-					console.log('match!', card1.value);
+				if (card1.flipped === 'flipped' && card2.flipped === 'flipped' && card1.value === card2.value) {
 					card1.matched = 'matched';
 					card2.matched = 'matched';
 
@@ -119,7 +109,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', '$q', function($rootScope, 
 
 	this.discardCard = function(){
 
-			if (this.selectedCard != null) {
+			if (this.selectedCard !== null) {
 
 			//add card to discard pile
 			this.discard.unshift(this.selectedCard);
