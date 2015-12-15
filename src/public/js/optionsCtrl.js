@@ -1,5 +1,5 @@
 //controller for the add song form
-app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', function($rootScope, $location, config) {
+app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSrvs', function($rootScope, $location, config, socket) {
 
 	this.numPlayers = 2;
 	this.deckStyle = './static/img/cardBacks/blue.jpg';
