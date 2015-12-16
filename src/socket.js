@@ -1,42 +1,37 @@
 // Keep track of which names are used so that there are no duplicates
 var userNames = (function () {
-  var names = {};
+  var names = [];
 
   var claim = function (name) {
-    if (!name || userNames[name]) {
+    if (!name || names.indexOf(name) !== -1 ) {
       return false;
     } else {
-      userNames[name] = true;
+      names.push(name);
       return true;
     }
   };
 
   // find the lowest unused "guest" name and claim it
   var getGuestName = function () {
-    var name,
+    var newGuestName,
       nextUserId = 1;
 
     do {
-      name = 'Guest ' + nextUserId;
+      newGuestName = 'Guest ' + nextUserId;
       nextUserId += 1;
-    } while (!claim(name));
+    } while (!claim(newGuestName));
 
-    return name;
+    return newGuestName;
   };
 
   // serialize claimed names as an array
   var get = function () {
-    var res = [];
-    for (user in userNames) {
-      res.push(user);
-    }
-
-    return res;
+    return names;
   };
 
   var free = function (name) {
-    if (userNames[name]) {
-      delete userNames[name];
+    if (names.indexOf(name) !== -1) {
+      names.splice(names.indexOf(name), 1);
     }
   };
 
@@ -49,11 +44,62 @@ var userNames = (function () {
 }());
 
 
+// Keep track of which games and avoid duplicates
+var allGames = (function () {
+	var availableGames = [];
+  var currentGames = [];
+
+  var claim = function (gameName) {
+    if (!gameName || availableGames.indexOf(gameName) !== -1 || currentGames.indexOf(gameName) !== -1 ) {
+      return false;
+    } else {
+      availableGames.push(gameName);
+      return true;
+    }
+  };
+
+  // find the lowest unused "guest" name and claim it
+  var assignGameName = function (numPlayers) {
+    var newGameName,
+      nextId = 1;
+
+    do {
+      newGameName = numPlayers + ' Player Game #' + nextId;
+      nextId += 1;
+    } while (!claim(newGameName));
+
+    return newGameName;
+  };
+
+  // serialize claimed names as an array
+  var get = function () {
+    return availableGames;
+  };
+
+  var free = function (name) {
+    if (names.indexOf(name) !== -1) {
+      names.splice(names.indexOf(name), 1);
+    }
+  };
+
+  return {
+    claim: claim,
+    free: free,
+    get: get,
+    assignGameName: assignGameName
+  };
+}());
+
+
 module.exports = function (socket) {
 
-	console.log('called from socket.js');
-  socket.emit('send:name', {
-    name: userNames.getGuestName()
+	var userName = userNames.getGuestName();
+
+//assign new socket a name and send them a list of current users
+	socket.emit('init', {
+    name: userName,
+    users: userNames.get(),
+    games: allGames.get()
   });
 
   setInterval(function () {
@@ -61,4 +107,45 @@ module.exports = function (socket) {
       time: (new Date()).toString()
     });
   }, 1000);
+
+  //rebroadcast users on new connection
+  socket.broadcast.emit('send:users', {
+    users: userNames.get()
+  });
+
+
+
+
+  // clean up when a user leaves, and broadcast it to other users
+  socket.on('disconnect', function () {
+    //remove a name
+    userNames.free(userName);
+      //resend users to others
+    socket.broadcast.emit('send:users', {
+      users: userNames.get()
+    });
+
+    socket.emit('send:users', {
+      users: userNames.get()
+    });
+
+
+
+  });
+
+    // clean up when a user leaves, and broadcast it to other users
+  socket.on('newGame', function (data) {
+    var newGame = allGames.assignGameName(data.numPlayers);
+
+    socket.emit('send:games', {
+    games: allGames.get()
+     });
+
+    socket.broadcast.emit('send:games', {
+    games: allGames.get()
+     });
+
+
+  });
+
 };

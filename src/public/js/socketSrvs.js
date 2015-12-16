@@ -17,7 +17,7 @@ app.factory('socketSrvs', function ($rootScope) {
             callback.apply(socket, args);
           }
         });
-      })
+      });
     }
   };
 });

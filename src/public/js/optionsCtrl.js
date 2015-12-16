@@ -1,6 +1,7 @@
 //controller for the add song form
 app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSrvs', function($rootScope, $location, config, socket) {
 
+	this.users = [];
 	this.numPlayers = 2;
 	this.deckStyle = './static/img/cardBacks/blue.jpg';
 	this.deckStyles =['./static/img/cardBacks/cheetah.gif', './static/img/cardBacks/black.png', './static/img/cardBacks/blue.jpg','./static/img/cardBacks/brown.jpg','./static/img/cardBacks/orange.PNG'];
@@ -48,6 +49,21 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 
 	};
 
+
+	this.showGameFinder = function(){
+
+		$('#welcome').hide('slow');
+		$('#gameFinder').show('fast');
+
+	};
+
+	this.hideGameFinder = function(){
+
+		$('#gameFinder').hide('slow');
+		$('#welcome').show('fast');
+
+	};
+
 	this.showRules = function(){};
 	this.hideRules = function(){};
 
@@ -84,8 +100,16 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 	};
 
 socket.on('send:name', function(data) {
-	console.log(data);
 	this.currentUserName = data.name;
+	this.users = data.users;
+
+}.bind(this));
+
+socket.on('send:users', function(data) {
+	console.log('new user data', data);
+
+	this.users = data.users;
+
 }.bind(this));
 
 

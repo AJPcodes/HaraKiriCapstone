@@ -57,11 +57,13 @@ body {
   color: black;
   text-align: center; }
 
-div#options {
+div#options,
+div#gameFinder {
   display: none; }
 
 div#welcome,
-div#options {
+div#options,
+div#gameFinder {
   margin: 10% 15%;
   background-color: rgba(67, 62, 57, 0.9);
   height: 80%;
@@ -189,6 +191,16 @@ div#cardStyles {
 
 .rotated {
   -webkit-transform: rotateY(540deg); }
+
+/*Styles for gameFinder*/
+div#gamefinder {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center; }
+  div#gamefinder #currentUsers {
+    flex-grow: 1; }
+  div#gamefinder #availableGames {
+    flex-grow: 1; }
 
 /*Styles for gameboard*/
 #gameBoard {

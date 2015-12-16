@@ -1,0 +1,23 @@
+
+
+	<div id='currentUsers'>
+		<h3>Current Users</h3>
+		<p ng-repeat="user in gameFinder.users" ng-hide="user == gameFinder.currentUserName">{{user}}</p>
+		<p>You are {{gameFinder.currentUserName}}</p>
+	</div>
+
+	<div id='availAbleGames'>
+		<h3>Available Games</h3>
+		<p ng-repeat="game in gameFinder.availableGames" ng-click="joinGame(game)">{{game}}</p>
+	</div>
+
+	<div id="newGame">
+		<h3>Start New Game</h3>
+		<p>Number of players:
+			<span class="hoverButton" ng-click='gameFinder.generateNewGame(2)'>2</span>
+			<span class="hoverButton" ng-click='gameFinder.generateNewGame(3)'>3</span>
+			<span class="hoverButton" ng-click='gameFinder.generateNewGame(4)'>4</span>
+
+		</p>
+	</div>
+	<h3 class="hoverButton"  ng-click='gameFinder.hideGameFinder()'>Exit</h3>
