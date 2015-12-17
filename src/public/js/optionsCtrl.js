@@ -22,7 +22,6 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 
 
 	this.animateCards = function(){
-		console.log('trigger pulled');
 
 		$('#optionsCard').addClass('rotated');
 		$('#optionsCard').on('transitionend webkitTransitionEnd', function() {

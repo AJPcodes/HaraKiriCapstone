@@ -47,38 +47,72 @@ var userNames = (function () {
 // Keep track of which games and avoid duplicates
 var allGames = (function () {
 	var availableGames = [];
+  var usedGameNames = [];
   var currentGames = [];
 
   var claim = function (gameName) {
-    if (!gameName || availableGames.indexOf(gameName) !== -1 || currentGames.indexOf(gameName) !== -1 ) {
+    if (!gameName || usedGameNames.indexOf(gameName) !== -1 || currentGames.indexOf(gameName) !== -1 ) {
       return false;
     } else {
-      availableGames.push(gameName);
+      usedGameNames.push(gameName);
       return true;
     }
   };
 
   // find the lowest unused "guest" name and claim it
-  var assignGameName = function (numPlayers) {
+  var assignGameName = function (data) {
     var newGameName,
       nextId = 1;
 
     do {
-      newGameName = numPlayers + ' Player Game #' + nextId;
+      newGameName = data.numPlayers + ' Player Game #' + nextId;
       nextId += 1;
     } while (!claim(newGameName));
 
-    return newGameName;
-  };
+    var newGameObj = {name: newGameName,
+      type: data.numPlayers,
+      players: [data.player1]};
 
+
+    availableGames.push(newGameObj);
+
+    return newGameObj;
+
+  };
   // serialize claimed names as an array
   var get = function () {
     return availableGames;
   };
 
+  var removeGame = function(gameName){
+
+    for (i=0;i<availableGames.length;i++) {
+      var game = availableGames[i];
+
+      if (game.name == gameName) {
+        availableGames.splice(i, 1);
+      }
+
+    }
+
+  }
+  //funtion to update the players currently in a game
+  var updateGame = function(gameToUpdate){
+    console.log('update players called');
+
+    for (i=0;i<availableGames.length;i++) {
+      var game = availableGames[i];
+      if (game.name == gameToUpdate.name) {
+        game = gameToUpdate;
+      }
+
+    }
+
+  };
+
   var free = function (name) {
-    if (names.indexOf(name) !== -1) {
-      names.splice(names.indexOf(name), 1);
+    if (usedGameNames.indexOf(name) !== -1) {
+      usedGameNames.splice(names.indexOf(name), 1);
     }
   };
 
@@ -86,7 +120,9 @@ var allGames = (function () {
     claim: claim,
     free: free,
     get: get,
-    assignGameName: assignGameName
+    assignGameName: assignGameName,
+    updateGame: updateGame,
+    removeGame: removeGame
   };
 }());
 
@@ -128,22 +164,70 @@ module.exports = function (socket) {
     socket.emit('send:users', {
       users: userNames.get()
     });
+  });
 
+
+  socket.on('newGame', function (data) {
+    var newGame = allGames.assignGameName(data);
+
+
+
+//send the game initiator all game data AND joinedGame
+    socket.emit('send:games', {
+    games: allGames.get(),
+    joinedGame: newGame
+     });
+
+//send all other users the list of games
+    socket.broadcast.emit('send:games', {
+    games: allGames.get()
+     });
 
 
   });
 
-    // clean up when a user leaves, and broadcast it to other users
-  socket.on('newGame', function (data) {
-    var newGame = allGames.assignGameName(data.numPlayers);
+  socket.on('joinGame', function (data) {
+    var gameToJoin = data.gameObj;
+    var availableGames = allGames.get();
 
-    socket.emit('send:games', {
-    games: allGames.get()
-     });
+    for (i=0;i<availableGames.length;i++) {
+      var game = availableGames[i];
 
+      //check for room in game and add player
+      if (game.name == gameToJoin.name && game.type > game.players.length) {
+        game.players.push(data.playerName);
+
+        allGames.updateGame(game);
+
+        socket.emit('send:games', {
+        games: allGames.get(),
+        joinedGame: game
+       });
+
+      //send all other users the list of games
     socket.broadcast.emit('send:games', {
     games: allGames.get()
      });
+
+
+      } //end first if
+
+      //check if game is now full
+      if (game.type == game.players.length) {
+        console.log(game);
+        console.log('game full!');
+
+        allGames.removeGame(game.name);
+
+        //send all other users the list of games
+    socket.broadcast.emit('send:games', {
+    games: allGames.get()
+     });
+
+      }
+
+    };
+
 
 
   });

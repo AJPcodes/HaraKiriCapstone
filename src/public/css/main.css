@@ -193,14 +193,26 @@ div#cardStyles {
   -webkit-transform: rotateY(540deg); }
 
 /*Styles for gameFinder*/
-div#gamefinder {
+#gameFinderFlex {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: center; }
-  div#gamefinder #currentUsers {
-    flex-grow: 1; }
-  div#gamefinder #availableGames {
-    flex-grow: 1; }
+
+#currentUsers {
+  flex-grow: 1;
+  width: 45%; }
+
+#availableGames {
+  flex-grow: 1;
+  width: 45%; }
+
+#newGame {
+  flex-grow: 1;
+  width: 90%; }
+
+#gameFinderFlex .exitButton {
+  display: block;
+  width: 100%; }
 
 /*Styles for gameboard*/
 #gameBoard {

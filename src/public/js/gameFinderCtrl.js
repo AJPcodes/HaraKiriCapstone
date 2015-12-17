@@ -5,6 +5,7 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 	this.deckStyle = './static/img/cardBacks/blue.jpg';
 	this.deckStyles =['./static/img/cardBacks/cheetah.gif', './static/img/cardBacks/black.png', './static/img/cardBacks/blue.jpg','./static/img/cardBacks/brown.jpg','./static/img/cardBacks/orange.PNG'];
 	this.currentUserName = '';
+	this.currentGame = null;
 	this.players = [];
 	this.availableGames = [];
 
@@ -47,10 +48,25 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
       if (!result) {
         alert('There was an error creating a game');
       } else {
+      	console.log(result);
 
       }
     });
   };
+
+  this.joinGame = function(game){
+    	// game.players.push(this.currentUserName);
+
+    	socket.emit('joinGame', {gameObj: game, playerName: this.currentUserName }, function (result) {
+      if (!result) {
+        alert('There was an error joining the game');
+      } else {
+      	console.log(result);
+
+      }
+    }.bind(this));
+  };
+
 	//socket recievers
 	socket.on('init', function(data) {
 		this.currentUserName = data.name;
@@ -66,6 +82,10 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 	socket.on('send:games', function(data) {
 		console.log('received', data);
 		this.availableGames = data.games;
+
+		if (data.joinedGame) {
+			this.currentGame = data.joinedGame;
+		}
 	}.bind(this));
 
 
