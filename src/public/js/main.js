@@ -14,6 +14,10 @@ app.config(['$routeProvider', function($routeProvider){
 		.when('/play', {
 			templateUrl: './static/partials/gameBoard.html',
 			controller: 'GameCtrl as gameCtrl'
+		})
+		.when('/online', {
+			templateUrl: './static/partials/onlineGameBoard.html',
+			controller: 'OnlineGameCtrl as gameCtrl'
 		});
 
 	// 	.when('/songs/list', {

@@ -4,6 +4,7 @@ app.factory("configSrvs", [function() {
 
 this.players = [];
 this.deckStyle = '';
+this.onlineGameDetails = {};
 
 
   return {
@@ -18,7 +19,17 @@ this.deckStyle = '';
     setUpGame: function(gameDetails){
       this.players = gameDetails.players;
       this.deckStyle = gameDetails.deckStyle;
-    }
+    },
+
+     newOnlineGame: function(){
+      return this.onlineGameDetails
+    },
+
+    setUpOnlineGame: function(game, userName){
+      this.onlineGameDetails = game;
+      this.onlineGameDetails.currentPlayer = userName;
+    },
+
 
   }; //end return
 

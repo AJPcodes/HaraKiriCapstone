@@ -6,7 +6,7 @@
 		<p>You are {{gameFinder.currentUserName}}</p>
 	</div>
 
-	<div id='availableGames'>
+	<div id='availableGames' ng-hide="gameFinder.currentGame">
 		<h3>Available Games</h3>
 		<p ng-repeat="game in gameFinder.availableGames" ng-click="gameFinder.joinGame(game)" class="hoverButton">{{game.name}}</p>
 	</div>

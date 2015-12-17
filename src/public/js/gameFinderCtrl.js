@@ -88,6 +88,18 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 		}
 	}.bind(this));
 
+	socket.on('game:start', function(data) {
+
+		if (data.gameToStart.name == this.currentGame.name) {
+
+		config.setUpOnlineGame(data.gameToStart);
+		$location.path( "/online");
+
+
+		}
+
+}.bind(this));
+
 
 
 

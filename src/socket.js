@@ -224,7 +224,17 @@ module.exports = function (socket) {
     games: allGames.get()
      });
 
-      }
+    //initialize the full game
+    socket.broadcast.emit('game:start', {
+    gameToStart: game
+     });
+
+        //initialize the full game
+    socket.emit('game:start', {
+    gameToStart: game
+     });
+
+      } //end if
 
     };
 
