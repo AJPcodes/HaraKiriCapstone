@@ -29,15 +29,15 @@
 
 	<div id="middleSection">
 
-	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentPlayer === gameCtrl.player1"></ng-include>
-	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentPlayer === gameCtrl.player2"></ng-include>
-	<ng-include src="'./static/partials/playerGrids/player3grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentPlayer === gameCtrl.player3 || !gameCtrl.player3"></ng-include>
-	<ng-include src="'./static/partials/playerGrids/player4grid.html'" class="playerBoards animate-hide"   ng-hide="gameCtrl.currentPlayer === gameCtrl.player4 || !gameCtrl.player4"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentUser === gameCtrl.player1.name"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentUser === gameCtrl.player2.name"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player3grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentUser === gameCtrl.player3.name || !gameCtrl.player3"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player4grid.html'" class="playerBoards animate-hide"   ng-hide="gameCtrl.currentUser === gameCtrl.player4.name || !gameCtrl.player4"></ng-include>
 
-	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentPlayer === gameCtrl.player1"></ng-include>
-	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentPlayer === gameCtrl.player2"></ng-include>
-	<ng-include src="'./static/partials/playerGrids/player3grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentPlayer === gameCtrl.player3"></ng-include>
-	<ng-include src="'./static/partials/playerGrids/player4grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentPlayer === gameCtrl.player4"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentUser === gameCtrl.player1.name"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentUser === gameCtrl.player2.name"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player3grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentUser === gameCtrl.player3.name"></ng-include>
+	<ng-include src="'./static/partials/playerGrids/player4grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentUser === gameCtrl.player4.name"></ng-include>
 
 	</div>
 

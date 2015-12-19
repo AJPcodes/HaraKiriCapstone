@@ -92,7 +92,7 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 
 		if (data.gameToStart.name == this.currentGame.name) {
 
-		config.setUpOnlineGame(data.gameToStart);
+		config.setUpOnlineGame(data.gameToStart, this.currentUserName);
 		$location.path( "/online");
 
 

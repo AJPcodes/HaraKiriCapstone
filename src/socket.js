@@ -17,7 +17,7 @@ var userNames = (function () {
       nextUserId = 1;
 
     do {
-      newGuestName = 'Guest ' + nextUserId;
+      newGuestName = 'Guest_' + nextUserId;
       nextUserId += 1;
     } while (!claim(newGuestName));
 
@@ -238,8 +238,14 @@ module.exports = function (socket) {
 
     };
 
+  }); //end join game
 
+//get and send updated game data when a player makes a move
+  socket.on('send:gameData', function(data){
+
+    socket.broadcast.emit('receive:gameData', data)
 
   });
 
-};
+
+}; //end module exports

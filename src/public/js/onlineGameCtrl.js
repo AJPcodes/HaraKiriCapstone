@@ -1,10 +1,59 @@
 app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', 'socketSrvs',  function($rootScope, cardSrvs, config, $q, socket) {
 
+//function to send the current state of the game to other users.
+	this.sendGameData = function(){
+
+		var gameData = {
+			name: this.gameName,
+			deck: this.deck,
+			currentRound: this.currentRound,
+			players: this.players,
+			turnsTaken: this.turnsTaken,
+			selectedCard: this.selectedCard,
+			discard: this.discard,
+			currentPlayer: this.currentPlayer
+		};
+
+		socket.emit('send:gameData', gameData, function (result) {
+      if (!result) {
+        alert('There was an error communicating with the server');
+      } else {
+      	console.log(result);
+
+      }
+    });
+
+	};
+
+//function to recieve game data
+socket.on('receive:gameData', function (data) {
+	console.log(data);
+	console.log(this.gameName);
+	console.log(data.name);
+	if (this.gameName == data.name) {
+			this.deck = data.deck;
+			this.currentRound = data.currentRound;
+			this.players = data.players;
+			this.player1 = this.players[0];//end player 1
+			this.player2 = this.players[1];//end player 1
+			this.player3 = this.players[2];//end player 1
+			this.player4 = this.players[3];//end player 1
+			this.turnsTaken = data.turnsTaken;
+			this.selectedCard = data.selectedCard;
+			this.discard = data.discard;
+			this.currentPlayer = data.currentPlayer;
+	if (this.currentRound > 9) {
+		this.endGame();
+	}
+		$('.playerDisplay h2').removeClass('highlighted');
+		console.log($('#' + this.currentPlayer.name));
+		$('#' + this.currentPlayer.name).addClass('highlighted');
+	}
+
+  }.bind(this));
 
 
-
-
-
+	this.currentUser = config.newOnlineGame().userName;
 	//card-back style
 	this.deckStyle = './static/img/cardBacks/brown.jpg';
 
@@ -16,7 +65,10 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 // console.log(this.cardValues['AH']);
 	//round tracker
 	this.currentRound = 1;
+	this.currentPlayer = '';
 
+ 	//game name
+ 	this.gameName = config.newOnlineGame().name;
 	this.playerNames = config.newOnlineGame().players;
 
 	this.players = [];
@@ -26,7 +78,7 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 			name: playerName,
 			score: 0,
 		cards: []
-		})
+		});
 	}.bind(this));
 
 	// $('#dealButton').show();
@@ -41,7 +93,12 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 	//used turns taken to determin who's turn it is.
 	this.changePlayer = function(){
 
-			this.currentPlayer = this.players[this.turnsTaken % this.players.length];
+		this.currentPlayer = this.players[this.turnsTaken % this.players.length];
+					//emit data
+		this.sendGameData();
+
+		$('.playerDisplay h2').removeClass('highlighted');
+		$('#' +this.currentPlayer.name).addClass('highlighted');
 
 	}; //end change player
 
@@ -54,19 +111,24 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 
 		$('#startButton').hide();
 		$('#dealButton').show();
+		//emit data
+		this.sendGameData();
+
 
 	};
 
 	this.selectCard = function(pile){
 
-		if (this.selectedCard === null) {
+		if (this.selectedCard === null && this.currentUser === this.currentPlayer.name) {
 
 			if (pile === 'deck') {
 				this.selectedCard = this.deck.splice(0,1);
 			} else if (pile === 'discard') {
 				this.selectedCard = this.discard.splice(0,1);
 			}
-		} else if (pile == 'discard' && this.selectedCard !== null) {
+					//emit data
+		this.sendGameData();
+		} else if (pile == 'discard' && this.selectedCard !== null && this.currentUser === this.currentPlayer.name) {
 
 			//add card to discard pile
 			this.discard.unshift(this.selectedCard[0]);
@@ -77,6 +139,8 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 			this.turnsTaken += 1;
 			//change to next player's turn
 			this.changePlayer();
+					//emit data
+		this.sendGameData();
 		}
 	}; //end selectCard
 
@@ -84,7 +148,7 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 
 	this.playCard = function(player, index, playerObj){
 		// console.log('Flipping:', player, index);
-		if (playerObj === this.currentPlayer && this.selectedCard !== null && playerObj.cards[index].matched != 'matched') {
+		if (playerObj.name === this.currentPlayer.name && this.currentUser === this.currentPlayer.name && this.selectedCard !== null && playerObj.cards[index].matched != 'matched') {
 
 			//add card to discard pile
 			this.discard.unshift(playerObj.cards[index]);
@@ -101,6 +165,7 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 					card2.matched = 'matched';
 
 				}
+						//emit data
 			};
 
 			checkMatch(playerObj.cards[index], playerObj.cards[(index+3)%6], this.cardValues);
@@ -115,11 +180,13 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 		}
 
 		// $('#'+player+index).toggleClass('flipped');
+				//emit data
+		this.sendGameData();
 	};
 
 	this.discardCard = function(){
 
-			if (this.selectedCard !== null) {
+			if (this.selectedCard !== null && this.currentUser === this.currentPlayer.name) {
 
 			//add card to discard pile
 			this.discard.unshift(this.selectedCard);
@@ -131,7 +198,8 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 			//change to next player's turn
 			this.changePlayer();
 		}
-
+				//emit data
+		this.sendGameData();
 	};
 
 
@@ -185,7 +253,8 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 		this.changePlayer();
 		$('#dealButton').hide('slow');
 
-
+		//emit data
+		this.sendGameData();
 	};
 
 
@@ -216,6 +285,8 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 			this.endGame();
 			}
 
+					//emit data
+		this.sendGameData();
 	};
 
 	this.endGame = function(){
@@ -230,6 +301,7 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 		});
 
 		alert('The winner is: ' + winner.name);
+
 
 	};
 

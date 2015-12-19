@@ -22,12 +22,12 @@ this.onlineGameDetails = {};
     },
 
      newOnlineGame: function(){
-      return this.onlineGameDetails
+      return this.onlineGameDetails;
     },
 
     setUpOnlineGame: function(game, userName){
       this.onlineGameDetails = game;
-      this.onlineGameDetails.currentPlayer = userName;
+      this.onlineGameDetails.userName = userName;
     },
 
 
