@@ -1,5 +1,8 @@
 app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', 'socketSrvs',  function($rootScope, cardSrvs, config, $q, socket) {
 
+	//hide buttons until needed
+		$('#startButton').hide();
+		$('#dealButton').hide();
 //function to send the current state of the game to other users.
 	this.sendGameData = function(){
 
@@ -47,13 +50,12 @@ socket.on('receive:gameData', function (data) {
 	}
 		$('.playerDisplay h2').removeClass('highlighted');
 		console.log($('#' + this.currentPlayer.name));
-		$('#' + this.currentPlayer.name).addClass('highlighted');
+		$('.' + this.currentPlayer.name).addClass('highlighted');
 	}
 
   }.bind(this));
 
 
-	this.currentUser = config.newOnlineGame().userName;
 	//card-back style
 	this.deckStyle = './static/img/cardBacks/brown.jpg';
 
@@ -63,6 +65,7 @@ socket.on('receive:gameData', function (data) {
 	//score values for all cards
 	this.cardValues = cardSrvs.getCardValues();
 // console.log(this.cardValues['AH']);
+	this.currentUser = config.newOnlineGame().userName;
 	//round tracker
 	this.currentRound = 1;
 	this.currentPlayer = '';
@@ -81,6 +84,7 @@ socket.on('receive:gameData', function (data) {
 		});
 	}.bind(this));
 
+
 	// $('#dealButton').show();
 
 
@@ -98,7 +102,7 @@ socket.on('receive:gameData', function (data) {
 		this.sendGameData();
 
 		$('.playerDisplay h2').removeClass('highlighted');
-		$('#' +this.currentPlayer.name).addClass('highlighted');
+		$('.' +this.currentPlayer.name).addClass('highlighted');
 
 	}; //end change player
 
@@ -110,10 +114,9 @@ socket.on('receive:gameData', function (data) {
 		this.player4 = this.players[3];//end player 1
 
 		$('#startButton').hide();
-		$('#dealButton').show();
-		//emit data
-		this.sendGameData();
+		// $('#dealButton').hide();
 
+		this.deal();
 
 	};
 
@@ -304,6 +307,12 @@ socket.on('receive:gameData', function (data) {
 
 
 	};
+
+//initalize game on load
+	if (this.currentUser == this.players[1].name) {
+		$('#startButton').show();
+
+}
 
 
 }]); //end gameCtrl
