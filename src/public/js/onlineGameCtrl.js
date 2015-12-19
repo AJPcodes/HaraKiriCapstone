@@ -1,4 +1,9 @@
-app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', function($rootScope, cardSrvs, config, $q) {
+app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', 'socketSrvs',  function($rootScope, cardSrvs, config, $q, socket) {
+
+
+
+
+
 
 	//card-back style
 	this.deckStyle = './static/img/cardBacks/brown.jpg';
