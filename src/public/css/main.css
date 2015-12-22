@@ -1,9 +1,40 @@
 /* sassy variables */
 @keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
+  0% {
+    opacity: 0;
+    transform: scale(0.25); }
+  50% {
+    opacity: 0.9;
+    transform: scale(0.9); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+@keyframes fadeIn-flipped {
+  0% {
+    opacity: 0;
+    transform: scale(0.25) rotateY(180deg); }
+  50% {
+    opacity: 0.9;
+    transform: scale(0.9) rotateY(180deg); }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(180deg); } }
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotateY(180deg); }
+  25% {
+    opacity: 0.9;
+    transform: scale(0.94) rotateY(200deg); }
+  50% {
+    opacity: 1;
+    transform: scale(0.98) rotateY(180deg); }
+  75% {
+    opacity: 0.9;
+    transform: scale(0.94) rotateY(160deg); }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(180deg); } }
 /*
   CSS Reset
  http://meyerweb.com/eric/tools/css/reset/
@@ -321,7 +352,11 @@ div#cardStyles {
   -webkit-transition: -webkit-transform 2s;
   transform-origin: 50% 50%;
   animation: fadeIn ease-in 1;
-  animation-duration: 3s; }
+  animation-duration: .75s; }
+
+#middleSection .card {
+  animation: fadeIn ease-in 1;
+  animation-duration: 1.5s; }
 
 .active .card {
   height: 7em; }
@@ -336,24 +371,14 @@ div#cardStyles {
   transition: transform 2s;
   transform: rotateY(180deg); }
 
-.matched {
-  opacity: 0.5;
-  animation-name: pulse;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear; }
+#middleSection .flipped {
+  animation: fadeIn-flipped ease-in 1;
+  animation-duration: 1.5s; }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1) rotateY(180deg); }
-  25% {
-    transform: scale(0.94) rotateY(200deg); }
-  50% {
-    transform: scale(0.98) rotateY(180deg); }
-  75% {
-    transform: scale(0.94) rotateY(160deg); }
-  100% {
-    transform: scale(1) rotateY(180deg); } }
+#middleSection .matched {
+  opacity: 0.5;
+  animation: fadeIn-flipped 1.5s ease-in 1, pulse 10s 1.5s linear infinite; }
+
 .playerDisplay h2.highlighted {
   text-shadow: 1px 1px 2px rgba(234, 210, 172, 0.9);
   color: rgba(234, 210, 172, 0.9);
