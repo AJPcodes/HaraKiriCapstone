@@ -1,4 +1,9 @@
 /* sassy variables */
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 /*
   CSS Reset
  http://meyerweb.com/eric/tools/css/reset/
@@ -308,12 +313,15 @@ div#cardStyles {
   width: 30%; }
 
 .card {
+  margin: 10px;
   position: relative;
   display: flex;
   height: 5em;
   -webkit-transform-style: preserve-3d;
   -webkit-transition: -webkit-transform 2s;
-  transform-origin: 50% 50%; }
+  transform-origin: 50% 50%;
+  animation: fadeIn ease-in 1;
+  animation-duration: 3s; }
 
 .active .card {
   height: 7em; }
