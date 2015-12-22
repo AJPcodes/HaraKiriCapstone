@@ -57,6 +57,10 @@ body {
   color: black;
   text-align: center; }
 
+h1, h2, h3, h4 {
+  font-variant: small-caps;
+  font-weight: bold; }
+
 div#options,
 div#gameFinder {
   display: none; }
@@ -65,7 +69,7 @@ div#welcome,
 div#options,
 div#gameFinder {
   margin: 10% 15%;
-  background-color: rgba(67, 62, 57, 0.9);
+  background-color: rgba(130, 120, 110, 0.9);
   height: 80%;
   border-radius: 5px;
   border: 3px solid rgba(234, 210, 172, 0.9);
@@ -76,13 +80,14 @@ div#gameFinder {
   font-size: 3em;
   font-weight: 700;
   margin: 5%;
-  text-shadow: 1px 1px 5px rgba(234, 210, 172, 0.9); }
+  text-shadow: 4px 4px 9px #454955; }
 
 #welcome h2 {
-  font-size: 2em; }
+  font-size: 2em;
+  text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
 
 .hoverButton:hover {
-  color: rgba(234, 210, 172, 0.9); }
+  color: #cd0010; }
 
 div#welcome img {
   height: 100%;
@@ -98,13 +103,21 @@ div#options img#chosenStyle {
 
 div#options h1,
 div#options h2 {
-  margin: 1em; }
+  margin: 1em;
+  font-weight: bold; }
 
 div#options h1 {
-  font-size: 3em; }
+  font-size: 2em;
+  text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
 
 div#options h2 {
-  font-size: 2em; }
+  font-size: 1.5em;
+  text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
+
+div#options h3.exitButton {
+  margin-bottom: 2em;
+  font-size: 1.5em;
+  text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
 
 div#options span.selected {
   font-size: 2em;
@@ -199,8 +212,21 @@ div#cardStyles {
   justify-content: center; }
 
 #currentUsers {
+  top-margin: 1em;
   flex-grow: 1;
   width: 45%; }
+
+#gameFinderFlex h3 {
+  font-weight: bold;
+  margin: 1em;
+  font-size: 1.25em;
+  text-shadow: 1px 1px 1px rgba(234, 210, 172, 0.9); }
+#gameFinderFlex p {
+  margin: .5em;
+  color: rgba(234, 210, 172, 0.9);
+  text-shadow: 2px 2px 1px #454955; }
+#gameFinderFlex p span.hoverButton:hover {
+  color: black; }
 
 #availableGames {
   flex-grow: 1;
@@ -222,7 +248,7 @@ div#cardStyles {
   width: 90%;
   height: 90%;
   margin: 5%;
-  background-color: rgba(67, 62, 57, 0.9);
+  background-color: rgba(130, 120, 110, 0.9);
   border: 3px solid rgba(234, 210, 172, 0.9);
   border-radius: 6px; }
 
@@ -243,12 +269,12 @@ div#cardStyles {
   justify-content: center; }
 
 .playerBoards {
-  width: 30%;
+  width: 28%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   height: 30%;
-  margin: 1.5em;
+  margin: .5em;
   border-collapse: collapse; }
 
 .currentPlayerBoard {
@@ -265,6 +291,13 @@ div#cardStyles {
   display: flex;
   flex-flow: column wrap;
   justify-content: center; }
+
+#rightSidebar figure {
+  margin: .75em; }
+#rightSidebar h2 {
+  font-weight: bold;
+  margin: .5em;
+  text-shadow: 3px 3px 10px #454955; }
 
 .playerDisplay {
   width: 95%;
@@ -295,9 +328,24 @@ div#cardStyles {
   transition: transform 2s;
   transform: rotateY(180deg); }
 
-.matched img {
-  border: 3px solid rgba(67, 62, 57, 0.9); }
+.matched {
+  opacity: 0.5;
+  animation-name: pulse;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; }
 
+@keyframes pulse {
+  0% {
+    transform: scale(1) rotateY(180deg); }
+  25% {
+    transform: scale(0.94) rotateY(200deg); }
+  50% {
+    transform: scale(0.98) rotateY(180deg); }
+  75% {
+    transform: scale(0.94) rotateY(160deg); }
+  100% {
+    transform: scale(1) rotateY(180deg); } }
 .playerDisplay h2.highlighted {
   text-shadow: 1px 1px 2px rgba(234, 210, 172, 0.9);
   color: rgba(234, 210, 172, 0.9);
@@ -307,7 +355,8 @@ div#cardStyles {
   position: absolute;
   flex: 0 1 auto;
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 1em; }
 
 .playerCards img {
   max-height: 7em;

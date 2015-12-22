@@ -1,6 +1,6 @@
 
 
-	<div id='currentUsers'>
+	<div id='currentUsers' ng-hide="gameFinder.currentGame">
 		<h3>Current Users</h3>
 		<p ng-repeat="user in gameFinder.users" ng-hide="user == gameFinder.currentUserName">{{user}}</p>
 		<p>You are {{gameFinder.currentUserName}}</p>
