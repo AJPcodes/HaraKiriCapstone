@@ -10,16 +10,12 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 	this.cardValues = cardSrvs.getCardValues();
 // console.log(this.cardValues['AH']);
 	//round tracker
-	this.currentRound = 1;
-
+	this.currentRound = 9;
 	this.players = [];
-
-
-
-
 
 	//used to dermine who's turn it is
 	this.turnsTaken = 0;
+	this.roundOver = false;
 
 	//defaults to null until selected in play
 	this.selectedCard = null;
@@ -31,12 +27,16 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 	}; //end change player
 
+	//gets game details for a new game
 	this.startGame = function(){
 		gameData = config.newGame();
 		console.log(gameData);
+
+		//gets player names and chosen deck style - default names are player1 player2
 		this.players = gameData.players;
 		this.deckStyle = gameData.deckStyle;
 
+		//note: if the 3rd or forth player doesn't exist, these values default to null
 		this.player1 = this.players[0];//end player 1
 		this.player2 = this.players[1];//end player 1
 		this.player3 = this.players[2];//end player 1
@@ -47,17 +47,19 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 		// this.deal();
 
-	};
+	}; //end start game
 
 	this.selectCard = function(pile){
 
-		if (this.selectedCard === null) {
-
+		//check if a card has already been drawn and that the round is not over
+		if (this.selectedCard === null && this.roundOver === false) {
+			//determin which pile is being drawn from
 			if (pile === 'deck') {
 				this.selectedCard = this.deck.splice(0,1);
 			} else if (pile === 'discard') {
 				this.selectedCard = this.discard.splice(0,1);
 			}
+			//if clicking on 'discard' when a card has been drawn, the card will be discaded and the players turn is over
 		} else if (pile == 'discard' && this.selectedCard !== null) {
 
 			//add card to discard pile
@@ -72,10 +74,11 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 		}
 	}; //end selectCard
 
-	//function that flips a players's card at a specified index
-
+	//
 	this.playCard = function(player, index, playerObj){
 		// console.log('Flipping:', player, index);
+		//check that a card is ready to be played by the user who's turn it is.
+		//It confirms you are not clicking on an opponent's grid, that you have drawn a card, and that you aren't trying to replace an already matched card.
 		if (playerObj === this.currentPlayer && this.selectedCard !== null && playerObj.cards[index].matched != 'matched') {
 
 			//add card to discard pile
@@ -88,6 +91,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 			//check if the cards match
 			var checkMatch = function(card1, card2, score, cardValues) {
+				//if both cards are flipped and match, they get the 'matched class'
 				if (card1.flipped === 'flipped' && card2.flipped === 'flipped' && card1.value === card2.value) {
 					card1.matched = 'matched';
 					card2.matched = 'matched';
@@ -95,9 +99,10 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 				}
 			};
 
+			//check for a match for the card played and the other card in its corresponding collumn
 			checkMatch(playerObj.cards[index], playerObj.cards[(index+3)%6], this.cardValues);
 
-
+			//reset selected card
 			this.selectedCard = null;
 			this.turnsTaken += 1;
 			//change to next player's turn
@@ -107,25 +112,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 		}
 
 		// $('#'+player+index).toggleClass('flipped');
-	};
-
-	this.discardCard = function(){
-
-			if (this.selectedCard !== null) {
-
-			//add card to discard pile
-			this.discard.unshift(this.selectedCard);
-			//reset 'flipped' status
-			this.discard[0].flipped = null;
-
-			this.selectedCard = null;
-			this.turnsTaken += 1;
-			//change to next player's turn
-			this.changePlayer();
-		}
-
-	};
-
+	}; //end play card
 
 
 	//check how many cards are flipper for each player to determine if game should end
@@ -168,13 +155,15 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 			}
 		}.bind(this));
 
-
+		//put the first card on the discard pile
 		this.discard = this.deck.splice(0,1);
+		//prepare the next deck
 		cardSrvs.prepareNewDeck();
 		}.bind(this);
 
 		dealCards();
 		this.changePlayer();
+		this.roundOver = false;
 		$('#dealButton').hide('slow');
 
 
@@ -182,15 +171,14 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 	this.scoreRound = function() {
 
-			$('#dealButton').show('slow');
+		$('#dealButton').show('slow');
 
 		$.each(this.players, function(index, player){
 
 			var score = 0;
 
 			$.each(player.cards, function(index, card){
-				// console.log(card);
-				// console.log(card);
+
 				card.flipped = "flipped";
 				if(card.matched != 'matched') {
 				score += this.cardValues[card.code].score;
@@ -202,7 +190,9 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 		}.bind(this)); //
 
+			this.roundOver = true;
 			this.currentRound += 1;
+
 			if (this.currentRound > 9) {
 			this.endGame();
 			}
@@ -210,17 +200,20 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 	};
 
 	this.endGame = function(){
+		console.log('endGame called');
 
-		var winner = this.player1;
+		this.winner = this.player1;
 		this.players.forEach(function(player){
 
 			if (player.score > winner.score) {
-				winner = player;
+				this.winner = player;
 			}
 
-		});
+		}.bind(this));
 
-		alert('The winner is: ' + winner.name);
+	$('#dealButton').hide();
+	$('#startButton').hide();
+	$('#winner').show('slow');
 
 	};
 

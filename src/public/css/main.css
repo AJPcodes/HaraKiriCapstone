@@ -35,6 +35,22 @@
   100% {
     opacity: 1;
     transform: scale(1) rotateY(180deg); } }
+@keyframes pulseText {
+  0% {
+    opacity: 1;
+    transform: scale(1); }
+  25% {
+    opacity: 0.9;
+    transform: scale(0.8); }
+  50% {
+    opacity: 1;
+    transform: scale(1.2); }
+  75% {
+    opacity: 0.9;
+    transform: scale(0.8); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
 /*
   CSS Reset
  http://meyerweb.com/eric/tools/css/reset/
@@ -99,7 +115,8 @@ h1, h2, h3, h4 {
 
 div#options,
 div#gameFinder,
-div#rules {
+div#rules,
+#winner {
   display: none; }
 
 div#welcome,
@@ -390,7 +407,8 @@ div#cardStyles {
 }
 */
 #dealButton,
-#startButton {
+#startButton,
+#winner {
   position: fixed;
   top: 45%;
   right: 40%;
@@ -398,6 +416,13 @@ div#cardStyles {
   font-size: 4em;
   z-index: 15;
   text-shadow: 5px 5px 10px rgba(234, 210, 172, 0.9); }
+
+#winner {
+  top: 35%;
+  width: 30%;
+  font-size: 3em;
+  text-align: center;
+  animation: fadeIn 1.5s ease-in 1, pulseText 10s 1.5s linear infinite; }
 
 .flipped {
   transition: transform 2s;
@@ -408,7 +433,6 @@ div#cardStyles {
   animation-duration: 1.5s; }
 
 #middleSection .matched {
-  opacity: 0.5;
   animation: fadeIn-flipped 1.5s ease-in 1, pulse 10s 1.5s linear infinite; }
 
 .playerDisplay h2.highlighted {

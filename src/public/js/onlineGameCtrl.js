@@ -7,6 +7,7 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 	this.sendGameData = function(){
 
 		var gameData = {
+			roundOver: this.roundOver,
 			name: this.gameName,
 			deck: this.deck,
 			currentRound: this.currentRound,
@@ -34,6 +35,7 @@ socket.on('receive:gameData', function (data) {
 	console.log(this.gameName);
 	console.log(data.name);
 	if (this.gameName == data.name) {
+			this.roundOver = data.roundOver;
 			this.deck = data.deck;
 			this.currentRound = data.currentRound;
 			this.players = data.players;
@@ -57,7 +59,7 @@ socket.on('receive:gameData', function (data) {
 
 
 	//card-back style
-	this.deckStyle = './static/img/cardBacks/brown.jpg';
+	this.deckStyle = config.newGame().deckStyle;
 
 	//array that contains the current deck
 	this.deck = [];
@@ -67,6 +69,7 @@ socket.on('receive:gameData', function (data) {
 // console.log(this.cardValues['AH']);
 	this.currentUser = config.newOnlineGame().userName;
 	//round tracker
+	this.roundOver = false;
 	this.currentRound = 1;
 	this.currentPlayer = '';
 
@@ -122,7 +125,7 @@ socket.on('receive:gameData', function (data) {
 
 	this.selectCard = function(pile){
 
-		if (this.selectedCard === null && this.currentUser === this.currentPlayer.name) {
+		if (this.selectedCard === null && this.currentUser === this.currentPlayer.name && this.roundOver === false) {
 
 			if (pile === 'deck') {
 				this.selectedCard = this.deck.splice(0,1);
@@ -254,6 +257,7 @@ socket.on('receive:gameData', function (data) {
 
 		dealCards();
 		this.changePlayer();
+		this.roundOver = false;
 		$('#dealButton').hide('slow');
 
 		//emit data
@@ -283,6 +287,7 @@ socket.on('receive:gameData', function (data) {
 
 		}.bind(this)); //
 
+			this.roundOver = true;
 			this.currentRound += 1;
 			if (this.currentRound > 9) {
 			this.endGame();

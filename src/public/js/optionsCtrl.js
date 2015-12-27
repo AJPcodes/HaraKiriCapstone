@@ -96,6 +96,7 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 	this.selectDeck = function(chosenDeck){
 		console.log(chosenDeck);
 		this.deckStyle = chosenDeck;
+		config.setDeckStyle(chosenDeck);
 	};
 
 	this.startGame = function(){

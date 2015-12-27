@@ -32,8 +32,10 @@ $http({
 
 }; //end getNewDeck
 
+//immediately generate a usable deck
 generateDeck();
 
+//oject that stores all card values for use in scoring
 var cardValues = {
   "AH": {
     type: "Ace",

@@ -39,6 +39,7 @@
 
 			<h4 id="startButton" ng-click='gameCtrl.startGame()' class="hoverButton">Ready</h4>
 			<h4 id="dealButton" ng-click='gameCtrl.deal()' class="hoverButton">Deal</h4>
+			<h4 id="winner">{{gameCtrl.winner.name}} Won!</h4>
 
 	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentPlayer === gameCtrl.player1"></ng-include>
 	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentPlayer === gameCtrl.player2"></ng-include>
