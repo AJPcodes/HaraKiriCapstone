@@ -2,9 +2,7 @@
 
 	<div id="leftSidebar">
 		<section class="controls">
-			<h3>Options</h3>
-			<h4 id="startButton" ng-click='gameCtrl.startGame()' class="hoverButton">Start</h4>
-			<h4 id="dealButton" ng-click='gameCtrl.deal()' class="hoverButton">Deal</h4>
+
 
 		</section>
 
@@ -23,11 +21,24 @@
 
 			<h3>Current Round:</h3>
 			<p>{{gameCtrl.currentRound}}</p>
+
+			<h2>Selected Card</h2>
+			<section class="deck cardContainer">
+		  	  <figure class="face">
+						<img src="./static/img/cards/{{gameCtrl.selectedCard[0].code}}.png" alt="Selected Card">
+		  	  </figure>
+		   	 	<figure class="back">
+					</figure>
+	 		</section>
+
 		</section>
 
 	</div>
 
 	<div id="middleSection">
+
+			<h4 id="startButton" ng-click='gameCtrl.startGame()' class="hoverButton">Ready</h4>
+			<h4 id="dealButton" ng-click='gameCtrl.deal()' class="hoverButton">Deal</h4>
 
 	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentPlayer === gameCtrl.player1"></ng-include>
 	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentPlayer === gameCtrl.player2"></ng-include>
@@ -57,15 +68,6 @@
 					<img src="./static/img/cards/{{gameCtrl.discard[0].code}}.png" alt="Discard Pile">
 	  	  </figure>
 
- 		</section>
-
- 				<h2>Selected Card</h2>
-		<section class="deck cardContainer">
-	  	  <figure class="face">
-					<img src="./static/img/cards/{{gameCtrl.selectedCard[0].code}}.png" alt="Selected Card">
-	  	  </figure>
-	   	 	<figure class="back">
-				</figure>
  		</section>
 
 

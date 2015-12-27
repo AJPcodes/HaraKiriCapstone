@@ -24,17 +24,27 @@
 			<p>{{gameCtrl.currentRound}}</p>
 		</section>
 
+		<h2>Selected Card</h2>
+		<section class="deck cardContainer">
+	  	  <figure class="face">
+					<img src="./static/img/cards/{{gameCtrl.selectedCard[0].code}}.png" alt="Selected Card">
+	  	  </figure>
+	   	 	<figure class="back">
+				</figure>
+ 		</section>
+
 	</div>
 
 	<div id="middleSection">
+
+			<h4 id="startButton" ng-click='gameCtrl.startGame()' class="hoverButton">Start</h4>
+			<h4 id="dealButton" ng-click='gameCtrl.deal()' class="hoverButton">Deal</h4>
 
 	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentUser === gameCtrl.player1.name"></ng-include>
 	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentUser === gameCtrl.player2.name"></ng-include>
 	<ng-include src="'./static/partials/playerGrids/player3grid.html'" class="playerBoards animate-hide" ng-hide="gameCtrl.currentUser === gameCtrl.player3.name || !gameCtrl.player3"></ng-include>
 	<ng-include src="'./static/partials/playerGrids/player4grid.html'" class="playerBoards animate-hide"   ng-hide="gameCtrl.currentUser === gameCtrl.player4.name || !gameCtrl.player4"></ng-include>
 
-			<h4 id="startButton" ng-click='gameCtrl.startGame()' class="hoverButton">Start</h4>
-			<h4 id="dealButton" ng-click='gameCtrl.deal()' class="hoverButton">Deal</h4>
 
 	<ng-include src="'./static/partials/playerGrids/player1grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentUser === gameCtrl.player1.name"></ng-include>
 	<ng-include src="'./static/partials/playerGrids/player2grid.html'" class="currentPlayerBoard active animate-hide" ng-show="gameCtrl.currentUser === gameCtrl.player2.name"></ng-include>
@@ -61,14 +71,7 @@
 
  		</section>
 
- 				<h2>Selected Card</h2>
-		<section class="deck cardContainer">
-	  	  <figure class="face">
-					<img src="./static/img/cards/{{gameCtrl.selectedCard[0].code}}.png" alt="Selected Card">
-	  	  </figure>
-	   	 	<figure class="back">
-				</figure>
- 		</section>
+
 
 
 	</div>

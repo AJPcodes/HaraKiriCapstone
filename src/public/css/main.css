@@ -122,6 +122,10 @@ div#gameFinder {
   font-size: 2em;
   text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
 
+#card1.back h2 {
+  margin: .25em;
+  padding: .25em; }
+
 .hoverButton:hover {
   color: #cd0010; }
 
@@ -282,7 +286,7 @@ div#cardStyles {
   flex-flow: row nowrap;
   justify-content: center;
   width: 90%;
-  height: 90%;
+  max-height: 80%;
   margin: 5%;
   background-color: rgba(130, 120, 110, 0.9);
   border: 3px solid rgba(234, 210, 172, 0.9);
@@ -367,6 +371,14 @@ div#cardStyles {
 
 }
 */
+#dealButton,
+#startButton {
+  position: fixed;
+  top: 45%;
+  right: 40%;
+  width: 20%;
+  font-size: 4em; }
+
 .flipped {
   transition: transform 2s;
   transform: rotateY(180deg); }

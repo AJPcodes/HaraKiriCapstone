@@ -45,6 +45,8 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 		$('#startButton').hide();
 		$('#dealButton').show();
 
+		// this.deal();
+
 	};
 
 	this.selectCard = function(pile){
