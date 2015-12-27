@@ -63,8 +63,19 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 
 	};
 
-	this.showRules = function(){};
-	this.hideRules = function(){};
+	this.showRules = function(){
+
+		$('#welcome').hide('slow');
+		$('#rules').show('fast');
+
+	};
+	this.hideRules = function(){
+
+		$('#rules').hide('slow');
+		$('#welcome').show('fast');
+
+
+	};
 
 	this.selectPlayers = function(numPlaying){
 		console.log(numPlaying);

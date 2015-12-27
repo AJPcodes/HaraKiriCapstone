@@ -98,12 +98,14 @@ h1, h2, h3, h4 {
   font-weight: bold; }
 
 div#options,
-div#gameFinder {
+div#gameFinder,
+div#rules {
   display: none; }
 
 div#welcome,
 div#options,
-div#gameFinder {
+div#gameFinder,
+div#rules {
   margin: 10% 15%;
   background-color: rgba(130, 120, 110, 0.9);
   height: 80%;
@@ -142,22 +144,37 @@ div#options img#chosenStyle {
   margin: 4em; }
 
 div#options h1,
-div#options h2 {
+div#options h2,
+div#rules h1,
+div#rules h2 {
   margin: 1em;
   font-weight: bold; }
 
-div#options h1 {
+div#options h1,
+div#rules h1 {
   font-size: 2em;
   text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
 
-div#options h2 {
+div#options h2,
+div#rules h2 {
   font-size: 1.5em;
   text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
 
-div#options h3.exitButton {
+div#options h3.exitButton,
+div#rules h3.exitButton {
   margin-bottom: 2em;
   font-size: 1.5em;
   text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
+
+div#rules h3 {
+  margin: 1.5em;
+  font-size: 1.25em;
+  text-shadow: 2px 2px 5px rgba(234, 210, 172, 0.9); }
+
+div#rules p {
+  font-weight: bold;
+  text-align: left;
+  text-shadow: 1px 1px 3px rgba(130, 120, 110, 0.9); }
 
 div#options span.selected {
   font-size: 2em;
@@ -241,9 +258,6 @@ div#cardStyles {
   transition: transform 2s;
   transform: rotateY(180deg) rotate(-15deg) translateZ(-3em);
   transform-origin: center bottom; }
-
-.rotated {
-  -webkit-transform: rotateY(540deg); }
 
 /*Styles for gameFinder*/
 #gameFinderFlex {
@@ -358,6 +372,10 @@ div#cardStyles {
   animation: fadeIn ease-in 1;
   animation-duration: .75s; }
 
+.rotated {
+  -webkit-transform: rotateY(540deg);
+  animation: fadeIn-flipped ease-in 1; }
+
 #middleSection .card {
   animation: fadeIn ease-in 1;
   animation-duration: 1.5s; }
@@ -377,7 +395,9 @@ div#cardStyles {
   top: 45%;
   right: 40%;
   width: 20%;
-  font-size: 4em; }
+  font-size: 4em;
+  z-index: 15;
+  text-shadow: 5px 5px 10px rgba(234, 210, 172, 0.9); }
 
 .flipped {
   transition: transform 2s;
