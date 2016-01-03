@@ -204,8 +204,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 		this.winner = this.player1;
 		this.players.forEach(function(player){
-
-			if (player.score > winner.score) {
+			if (player.score < this.winner.score) {
 				this.winner = player;
 			}
 

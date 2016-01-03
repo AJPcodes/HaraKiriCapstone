@@ -70,7 +70,7 @@ socket.on('receive:gameData', function (data) {
 	this.currentUser = config.newOnlineGame().userName;
 	//round tracker
 	this.roundOver = false;
-	this.currentRound = 1;
+	this.currentRound = 9;
 	this.currentPlayer = '';
 
  	//game name
@@ -302,13 +302,16 @@ socket.on('receive:gameData', function (data) {
 		var winner = this.player1;
 		this.players.forEach(function(player){
 
-			if (player.score > winner.score) {
+			if (player.score < winner.score) {
 				winner = player;
 			}
 
 		});
 
-		alert('The winner is: ' + winner.name);
+		this.winner = winner;
+	$('#dealButton').hide();
+	$('#startButton').hide();
+	$('#winner').show('slow');
 
 
 	};
