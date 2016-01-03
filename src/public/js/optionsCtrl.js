@@ -24,6 +24,8 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 	this.animateCards = function(){
 
 		$('#optionsCard').addClass('rotated');
+
+		//fan cards after rotation
 		$('#optionsCard').on('transitionend webkitTransitionEnd', function() {
 
 		$('#card1').addClass('fan');
