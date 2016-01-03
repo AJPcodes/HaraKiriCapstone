@@ -6,7 +6,7 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 	this.deckStyle = './static/img/cardBacks/blue.jpg';
 	//possible deck styles
 	this.deckStyles =['./static/img/cardBacks/cheetah.gif', './static/img/cardBacks/black.png', './static/img/cardBacks/blue.jpg','./static/img/cardBacks/brown.jpg','./static/img/cardBacks/orange.PNG'];
-	this.currentUserName = '';
+	this.currentUserName = config.getUserName();
 	this.currentGame = null;
 	this.players = [];
 	this.availableGames = [];
@@ -61,6 +61,7 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 	socket.on('init', function(data) {
 		//assign a username
 		this.currentUserName = data.name;
+		config.setUserName(data.name);
 		//get a list of other users
 		this.users = data.users;
 		//get a list of available games

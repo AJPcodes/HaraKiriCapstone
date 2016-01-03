@@ -1,4 +1,4 @@
-app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', function($rootScope, cardSrvs, config, $q) {
+app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '$location', function($rootScope, cardSrvs, config, $q, $location) {
 
 	//card-back style
 	this.deckStyle = config.newGame().deckStyle;
@@ -216,6 +216,12 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 	$('#winner').show('slow');
 
 	};
+
+	this.backHome = function(){
+
+		$location.path( "/");
+
+	}
 
 
 }]); //end gameCtrl

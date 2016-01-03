@@ -1,7 +1,7 @@
 //factory for working with user's songs
 app.factory("configSrvs", [function() {
 
-
+this.userName = '';
 this.players = [];
 //default deck style if not changed
 this.deckStyle = './static/img/cardBacks/blue.jpg';
@@ -37,6 +37,15 @@ this.onlineGameDetails = {};
     //allows user to change the deck-style - called by optionsCtrl
     setDeckStyle: function(chosenStyle){
       this.deckStyle = chosenStyle;
+    }.bind(this),
+
+    getUserName: function(){
+      return this.userName;
+    }.bind(this),
+
+    setUserName: function(userName){
+      this.userName = userName;
+      console.log('username established as ', userName);
     }.bind(this)
 
   }; //end return

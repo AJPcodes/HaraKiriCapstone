@@ -1,4 +1,4 @@
-app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', 'socketSrvs',  function($rootScope, cardSrvs, config, $q, socket) {
+app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', 'socketSrvs', '$location',  function($rootScope, cardSrvs, config, $q, socket, $location) {
 
 	//hide buttons until needed
 		$('#startButton').hide();
@@ -321,6 +321,10 @@ socket.on('receive:gameData', function (data) {
 
 }
 
+
+	this.backHome = function(){
+		$location.path("/");
+	}
 
 }]); //end gameCtrl
 

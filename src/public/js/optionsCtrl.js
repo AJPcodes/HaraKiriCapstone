@@ -5,7 +5,7 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 	this.numPlayers = 2;
 	this.deckStyle = './static/img/cardBacks/blue.jpg';
 	this.deckStyles =['./static/img/cardBacks/cheetah.gif', './static/img/cardBacks/black.png', './static/img/cardBacks/blue.jpg','./static/img/cardBacks/brown.jpg','./static/img/cardBacks/orange.PNG'];
-	this.currentUserName = '';
+	this.currentUserName = config.getUserName();
 	this.players = [
 	{
 		name: "Player 1",
@@ -112,11 +112,13 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 
 	};
 
-socket.on('send:name', function(data) {
-	this.currentUserName = data.name;
-	this.users = data.users;
+// socket.on('send:name', function(data) {
+// 	this.currentUserName = data.name;
+// 	console.log('name recieved');
+// 	config.setUserName(data.name);
+// 	this.users = data.users;
 
-}.bind(this));
+// }.bind(this));
 
 socket.on('send:users', function(data) {
 	console.log('new user data', data);
