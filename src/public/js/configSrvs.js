@@ -3,6 +3,7 @@ app.factory("configSrvs", [function() {
 
 
 this.players = [];
+//default deck style if not changed
 this.deckStyle = './static/img/cardBacks/blue.jpg';
 this.onlineGameDetails = {};
 
@@ -11,7 +12,6 @@ this.onlineGameDetails = {};
 
     //function called to get player and deck styles for an offline game
       newGame: function(){
-        console.log(this.deckStyle);
       return {
         players: this.players,
         deckStyle: this.deckStyle,

@@ -17,10 +17,10 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 	this.turnsTaken = 0;
 	this.roundOver = false;
 
-	//defaults to null until selected in play
+	//defaults to null until a card is selected in play
 	this.selectedCard = null;
 
-	//used turns taken to determin who's turn it is.
+	//used turns taken and the number of players to determin who's turn it is.
 	this.changePlayer = function(){
 
 			this.currentPlayer = this.players[this.turnsTaken % this.players.length];
@@ -30,13 +30,12 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 	//gets game details for a new game
 	this.startGame = function(){
 		gameData = config.newGame();
-		console.log(gameData);
 
 		//gets player names and chosen deck style - default names are player1 player2
 		this.players = gameData.players;
 		this.deckStyle = gameData.deckStyle;
 
-		//note: if the 3rd or forth player doesn't exist, these values default to null
+		//note: if the 3rd or forth player don't exist, these values default to null
 		this.player1 = this.players[0];//end player 1
 		this.player2 = this.players[1];//end player 1
 		this.player3 = this.players[2];//end player 1
@@ -76,9 +75,8 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 	//
 	this.playCard = function(player, index, playerObj){
-		// console.log('Flipping:', player, index);
 		//check that a card is ready to be played by the user who's turn it is.
-		//It confirms you are not clicking on an opponent's grid, that you have drawn a card, and that you aren't trying to replace an already matched card.
+		//confirm a player is not clicking on an opponent's grid, that there is a selected  card, and that the user isn't trying to replace an already matched card.
 		if (playerObj === this.currentPlayer && this.selectedCard !== null && playerObj.cards[index].matched != 'matched') {
 
 			//add card to discard pile
@@ -111,11 +109,10 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 			this.checkStatus();
 		}
 
-		// $('#'+player+index).toggleClass('flipped');
 	}; //end play card
 
 
-	//check how many cards are flipper for each player to determine if game should end
+	//check how many cards are flipped for each player to determine if game should end
 	this.checkStatus = function(){
 
 			var roundOver = false;
@@ -179,7 +176,9 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 
 			$.each(player.cards, function(index, card){
 
+				//all cards are immediately flipped
 				card.flipped = "flipped";
+				//score is calculated from all non matched cards
 				if(card.matched != 'matched') {
 				score += this.cardValues[card.code].score;
 				}
@@ -193,6 +192,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 			this.roundOver = true;
 			this.currentRound += 1;
 
+			//if 9 rounds have been played, end the game
 			if (this.currentRound > 9) {
 			this.endGame();
 			}
@@ -203,6 +203,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', functio
 		console.log('endGame called');
 
 		this.winner = this.player1;
+		//check for lowest score
 		this.players.forEach(function(player){
 			if (player.score < this.winner.score) {
 				this.winner = player;

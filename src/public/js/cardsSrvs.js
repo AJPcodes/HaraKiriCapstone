@@ -1,4 +1,4 @@
-//factory for working with user's songs
+//factory that uses deckofcardsapi to generate new, shuffled decks for use in game play
 app.factory("cardSrvs", ['$http', function($http) {
 
 
@@ -6,7 +6,7 @@ var newDeck = [];
 
 generateDeck = function(){
 
-//this call returns a data that includes the generated decks ID
+//this call returns a data that includes the generated deck's ID
 $http({
   method: 'GET',
   url: 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=4'

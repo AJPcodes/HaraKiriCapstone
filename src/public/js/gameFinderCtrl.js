@@ -2,26 +2,14 @@
 app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socketSrvs', function($rootScope, $location, config, socket) {
 
 	this.users = [];
+	//default deck style
 	this.deckStyle = './static/img/cardBacks/blue.jpg';
+	//possible deck styles
 	this.deckStyles =['./static/img/cardBacks/cheetah.gif', './static/img/cardBacks/black.png', './static/img/cardBacks/blue.jpg','./static/img/cardBacks/brown.jpg','./static/img/cardBacks/orange.PNG'];
 	this.currentUserName = '';
 	this.currentGame = null;
 	this.players = [];
 	this.availableGames = [];
-
-
-	// this.animateCards = function(){
-	// 	console.log('trigger pulled');
-
-	// 	$('#optionsCard').addClass('rotated');
-	// 	$('#optionsCard').on('transitionend webkitTransitionEnd', function() {
-	// 	$('#card1').addClass('fan');
-	// 	$('#card2').addClass('fan');
-	// 	$('#card3').addClass('fan');
-
-
-	// 	});
-	// };
 
 	this.showGameFinder = function(){
 
@@ -37,10 +25,12 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 
 	};
 
-	this.showRules = function(){};
-	this.hideRules = function(){};
+	// this.showRules = function(){};
+	// this.hideRules = function(){};
 
 	this.generateNewGame = function(num){
+
+		//tell the server to make a new game and wait for more players. Player1 will be the game creator
 		socket.emit('newGame', {
       numPlayers: num,
       player1: this.currentUserName
@@ -55,8 +45,8 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
   };
 
   this.joinGame = function(game){
-    	// game.players.push(this.currentUserName);
 
+  		//send a request to join a game, sends the game data and the current user's name
     	socket.emit('joinGame', {gameObj: game, playerName: this.currentUserName }, function (result) {
       if (!result) {
         alert('There was an error joining the game');
@@ -69,39 +59,42 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 
 	//socket recievers
 	socket.on('init', function(data) {
+		//assign a username
 		this.currentUserName = data.name;
+		//get a list of other users
 		this.users = data.users;
+		//get a list of available games
 		this.availableGames = data.games;
 	}.bind(this));
 
 	socket.on('send:users', function(data) {
+		//update the list ove current users
 		this.users = data.users;
 
 	}.bind(this));
 
 	socket.on('send:games', function(data) {
-		console.log('received', data);
+		//update the list of available games
 		this.availableGames = data.games;
 
 		if (data.joinedGame) {
+			//set the joined game to be the user's current game
 			this.currentGame = data.joinedGame;
 		}
 	}.bind(this));
 
 	socket.on('game:start', function(data) {
 
+		//check if the user is in the game that's starting
 		if (data.gameToStart.name == this.currentGame.name) {
 
+		//set up game variables using config factory and change to the gameboard
 		config.setUpOnlineGame(data.gameToStart, this.currentUserName);
 		$location.path( "/online");
 
 
 		}
 
-}.bind(this));
-
-
-
-
+	}.bind(this));
 
 }]); //end gameFinderCtrl

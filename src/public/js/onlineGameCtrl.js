@@ -6,6 +6,7 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 //function to send the current state of the game to other users.
 	this.sendGameData = function(){
 
+		//gather current game state including any changes made by user interaction
 		var gameData = {
 			roundOver: this.roundOver,
 			name: this.gameName,
@@ -31,18 +32,16 @@ app.controller('OnlineGameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '
 
 //function to recieve game data
 socket.on('receive:gameData', function (data) {
-	console.log(data);
-	console.log(this.gameName);
-	console.log(data.name);
+
 	if (this.gameName == data.name) {
 			this.roundOver = data.roundOver;
 			this.deck = data.deck;
 			this.currentRound = data.currentRound;
 			this.players = data.players;
-			this.player1 = this.players[0];//end player 1
-			this.player2 = this.players[1];//end player 1
-			this.player3 = this.players[2];//end player 1
-			this.player4 = this.players[3];//end player 1
+			this.player1 = this.players[0];
+			this.player2 = this.players[1];
+			this.player3 = this.players[2];
+			this.player4 = this.players[3];
 			this.turnsTaken = data.turnsTaken;
 			this.selectedCard = data.selectedCard;
 			this.discard = data.discard;
@@ -50,8 +49,8 @@ socket.on('receive:gameData', function (data) {
 	if (this.currentRound > 9) {
 		this.endGame();
 	}
+		//highlight the player who's turn it is.
 		$('.playerDisplay h2').removeClass('highlighted');
-		console.log($('#' + this.currentPlayer.name));
 		$('.' + this.currentPlayer.name).addClass('highlighted');
 	}
 
@@ -111,10 +110,10 @@ socket.on('receive:gameData', function (data) {
 
 	this.startGame = function(){
 
-		this.player1 = this.players[0];//end player 1
-		this.player2 = this.players[1];//end player 1
-		this.player3 = this.players[2];//end player 1
-		this.player4 = this.players[3];//end player 1
+		this.player1 = this.players[0];
+		this.player2 = this.players[1];
+		this.player3 = this.players[2];
+		this.player4 = this.players[3];
 
 		$('#startButton').hide();
 		// $('#dealButton').hide();
