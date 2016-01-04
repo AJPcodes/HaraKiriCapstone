@@ -104,7 +104,7 @@ table {
 /*@import url(https://fonts.googleapis.com/css?family=Orbitron:400,700);*/
 /*//Welcome page styles//*/
 body {
-  background-color: #cd0010;
+  background-color: #1d8762;
   font-family: "Orbitron", sans-serif;
   color: black;
   text-align: center; }
@@ -146,7 +146,7 @@ div#rules {
   padding: .25em; }
 
 .hoverButton:hover {
-  color: #cd0010; }
+  color: #1d8762; }
 
 div#welcome img {
   height: 100%;
@@ -191,11 +191,12 @@ div#rules h3 {
 div#rules p {
   font-weight: bold;
   text-align: left;
-  text-shadow: 1px 1px 3px rgba(130, 120, 110, 0.9); }
+  text-shadow: 1px 1px 3px rgba(130, 120, 110, 0.9);
+  padding: 10px; }
 
 div#options span.selected {
   font-size: 2em;
-  color: #cd0010; }
+  color: #1d8762; }
 
 div#cardStyles {
   display: inline-block;
@@ -240,7 +241,7 @@ div#cardStyles {
   box-shadow: 3px 3px 5px black; }
 
 #optionsCard .face {
-  background: #cd0010;
+  background: #1d8762;
   background-size: 100% 100%;
   border-radius: 9px; }
 
@@ -296,7 +297,8 @@ div#cardStyles {
   margin: .5em;
   color: rgba(234, 210, 172, 0.9);
   text-shadow: 2px 2px 1px #454955; }
-#gameFinderFlex p span.hoverButton:hover {
+#gameFinderFlex p span.hoverButton:hover,
+#gameFinderFlex #availableGames p.hoverButton:hover {
   color: black; }
 
 #availableGames {
@@ -328,7 +330,8 @@ div#cardStyles {
   width: 15%;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center; }
+  justify-content: center;
+  padding: 15px 0 15px 10px; }
 
 #dealButton {
   display: none; }
@@ -337,7 +340,8 @@ div#cardStyles {
   flex-grow: 5;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center; }
+  justify-content: center;
+  padding: 15px 0 15px 0px; }
 
 .playerBoards {
   width: 28%;
@@ -361,7 +365,8 @@ div#cardStyles {
   width: 20%;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center; }
+  justify-content: center;
+  padding: 15px 10px 15px 0px; }
 
 #rightSidebar figure {
   margin: .75em; }

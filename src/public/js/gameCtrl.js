@@ -221,7 +221,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '$locat
 
 		$location.path( "/");
 
-	}
+	};
 
 
 }]); //end gameCtrl

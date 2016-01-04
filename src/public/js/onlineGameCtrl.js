@@ -324,7 +324,7 @@ socket.on('receive:gameData', function (data) {
 
 	this.backHome = function(){
 		$location.path("/");
-	}
+	};
 
 }]); //end gameCtrl
 
