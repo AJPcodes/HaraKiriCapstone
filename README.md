@@ -3,6 +3,7 @@
 This is a student project for Nashville Software School (NSS)
 The goal is to write an app that plays the card game 'HaraKiri' using Express, Angular, Socket.io and Node.
 
+By Allen Phelps
 
 
 ## Set Up

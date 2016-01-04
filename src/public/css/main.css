@@ -104,7 +104,8 @@ table {
 /*@import url(https://fonts.googleapis.com/css?family=Orbitron:400,700);*/
 /*//Welcome page styles//*/
 body {
-  background-color: #1d8762;
+  background-image: url("../img/background1.jpg");
+  background-color: #951215;
   font-family: "Orbitron", sans-serif;
   color: black;
   text-align: center; }
@@ -132,6 +133,7 @@ div#rules {
 
 #welcome h1,
 #welcome h2 {
+  text-align: center;
   font-size: 3em;
   font-weight: 700;
   margin: 5%;
@@ -146,7 +148,7 @@ div#rules {
   padding: .25em; }
 
 .hoverButton:hover {
-  color: #1d8762; }
+  color: #951215; }
 
 div#welcome img {
   height: 100%;
@@ -196,7 +198,7 @@ div#rules p {
 
 div#options span.selected {
   font-size: 2em;
-  color: #1d8762;
+  color: #951215;
   text-shadow: 2px 2px 2px rgba(234, 210, 172, 0.9); }
 
 div#options p {
@@ -211,7 +213,7 @@ div#options input[type="text"] {
   background-color: rgba(130, 120, 110, 0.9);
   padding: 5px;
   border: none;
-  border-bottom: solid 2px #1d8762;
+  border-bottom: solid 2px #951215;
   box-shadow: 2px 2px 4px black;
   transition: border 0.3s; }
 
@@ -261,7 +263,7 @@ div#cardStyles {
   box-shadow: 3px 3px 5px black; }
 
 #optionsCard .face {
-  background: #1d8762;
+  background: #951215;
   background-size: 100% 100%;
   border-radius: 9px; }
 
