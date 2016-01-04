@@ -109,6 +109,10 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 		});
 		$location.path( "/play");
 
+	};
+
+	this.toggleNameInput = function(){
+		$('#options input').toggle('display');
 
 	};
 
