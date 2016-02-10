@@ -46,16 +46,31 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 
   this.joinGame = function(game){
 
-  		//send a request to join a game, sends the game data and the current user's name
-    	socket.emit('joinGame', {gameObj: game, playerName: this.currentUserName }, function (result) {
+      //send a request to join a game, sends the game data and the current user's name
+      socket.emit('joinGame', {gameObj: game, playerName: this.currentUserName }, function (result) {
       if (!result) {
         alert('There was an error joining the game');
       } else {
-      	console.log(result);
+        console.log(result);
 
       }
     }.bind(this));
   };
+
+  this.leaveGame = function(){
+      console.log('leaving game');
+      //send a request to join a game, sends the game data and the current user's name
+      socket.emit('leaveGame', {gameObj: this.currentGame}, function (result) {
+      if (!result) {
+        alert('There was an error leaving the game');
+      } else {
+        console.log(result);
+      }
+    }.bind(this));
+
+      this.currentGame = null;
+  };
+
 
 	//socket recievers
 	socket.on('init', function(data) {
