@@ -91,6 +91,7 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 
 		//set up game variables using config factory and change to the gameboard
 		config.setUpOnlineGame(data.gameToStart, this.currentUserName);
+    $('#welcome').show();
 		$location.path( "/online");
 
 

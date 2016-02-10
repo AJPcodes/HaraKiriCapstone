@@ -331,8 +331,8 @@ socket.on('receive:gameData', function (data) {
 		console.log(this.gameName);
 		console.log(data.gameName);
 		if (this.gameName == data.gameName) {
-			alert(data.userName + ' Disconnected!');
-			$location.path("/");
+			$('#disconnectAlert').show();
+			// $location.path("/");
 		}
 	}.bind(this));
 

@@ -40,6 +40,7 @@ module.exports = function (socket) {
     games: allGames.get()
      });
 
+    userGame = newGame;
 
   });
 
