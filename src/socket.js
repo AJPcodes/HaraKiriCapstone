@@ -101,6 +101,9 @@ module.exports = function (socket) {
   socket.on('disconnect', function () {
     //remove a name
     userNames.free(userName);
+    if (userGame) {
+      allGames.free(userGame.name);
+    }
       //resend users to others
     socket.broadcast.emit('send:users', {
       users: userNames.get()
@@ -113,4 +116,18 @@ module.exports = function (socket) {
       })
     }
   }); //end disconnect
+
+  socket.on('disconnectReceived', function () {
+    //make sure the userGame is null so disconnect won't trigger for new players resuing the game name
+    userGame = null;
+  }); //end disconnect
+
+  socket.on('gameOver', function () {
+    //free the game name for re-use
+    if (userGame) {
+      allGames.free(userGame.name);
+    }
+
+  }); //end gameOver
+
 }; //end module exports

@@ -64,7 +64,7 @@ var updateGame = function(gameToUpdate){
 
 var free = function (name) {
   if (usedGameNames.indexOf(name) !== -1) {
-    usedGameNames.splice(names.indexOf(name), 1);
+    usedGameNames.splice(usedGameNames.indexOf(name), 1);
   }
 };
 
