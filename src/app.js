@@ -2,7 +2,11 @@
 
 var express = require('express');
 var app = express();
+var PORT = 3000;
 
+if (process.env.PORT) {
+    PORT = process.env.PORT;
+}
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -31,7 +35,7 @@ app.get('*', function(req, res){
 io.sockets.on('connection', require('./socket'));
 
 
-http.listen(3000, function() {
-	console.log("The frontend server is running on port 3000!");
+http.listen(PORT, function() {
+	console.log("The frontend server is running on port " + PORT);
 });
 
