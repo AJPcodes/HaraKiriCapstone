@@ -308,6 +308,7 @@ socket.on('receive:gameData', function (data) {
 		});
 
 		this.winner = winner;
+	socket.emit('gameOver', null);
 	$('#dealButton').hide();
 	$('#startButton').hide();
 	$('#winner').show('slow');
@@ -325,6 +326,19 @@ socket.on('receive:gameData', function (data) {
 	this.backHome = function(){
 		$location.path("/");
 	};
+
+	//Trigger an Alert when a player disconnects
+	socket.on('user:disconnect', function (data) {
+		console.log(this.gameName);
+		console.log(data.gameName);
+
+		socket.emit('disconnectReceived', null);
+
+		if (this.gameName == data.gameName) {
+			$('#disconnectAlert').show();
+			// $location.path("/");
+		}
+	}.bind(this));
 
 }]); //end gameCtrl
 
