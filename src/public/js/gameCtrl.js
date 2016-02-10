@@ -10,7 +10,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '$locat
 	this.cardValues = cardSrvs.getCardValues();
 // console.log(this.cardValues['AH']);
 	//round tracker
-	this.currentRound = 9;
+	this.currentRound = z;
 	this.players = [];
 
 	//used to dermine who's turn it is
@@ -200,7 +200,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '$locat
 	};
 
 	this.endGame = function(){
-		console.log('endGame called');
+		// console.log('endGame called');
 
 		this.winner = this.player1;
 		//check for lowest score

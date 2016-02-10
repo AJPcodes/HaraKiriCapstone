@@ -45,7 +45,7 @@ this.onlineGameDetails = {};
 
     setUserName: function(userName){
       this.userName = userName;
-      console.log('username established as ', userName);
+      // console.log('username established as ', userName);
     }.bind(this)
 
   }; //end return

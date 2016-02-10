@@ -80,7 +80,7 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 	};
 
 	this.selectPlayers = function(numPlaying){
-		console.log(numPlaying);
+		// console.log(numPlaying);
 		this.numPlayers = numPlaying;
 
 		this.players = [];
@@ -96,7 +96,7 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 	};
 
 	this.selectDeck = function(chosenDeck){
-		console.log(chosenDeck);
+		// console.log(chosenDeck);
 		this.deckStyle = chosenDeck;
 		config.setDeckStyle(chosenDeck);
 	};
@@ -125,7 +125,7 @@ app.controller('OptionsCtrl',['$rootScope', "$location", 'configSrvs', 'socketSr
 // }.bind(this));
 
 socket.on('send:users', function(data) {
-	console.log('new user data', data);
+	// console.log('new user data', data);
 
 	this.users = data.users;
 

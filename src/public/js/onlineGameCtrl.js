@@ -329,8 +329,8 @@ socket.on('receive:gameData', function (data) {
 
 	//Trigger an Alert when a player disconnects
 	socket.on('user:disconnect', function (data) {
-		console.log(this.gameName);
-		console.log(data.gameName);
+		// console.log(this.gameName);
+		// console.log(data.gameName);
 
 		socket.emit('disconnectReceived', null);
 
