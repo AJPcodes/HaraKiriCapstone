@@ -58,7 +58,7 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
   };
 
   this.leaveGame = function(){
-      console.log('leaving game');
+      // console.log('leaving game');
       //send a request to join a game, sends the game data and the current user's name
       socket.emit('leaveGame', {gameObj: this.currentGame}, function (result) {
       if (!result) {
