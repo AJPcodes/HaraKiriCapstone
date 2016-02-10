@@ -10,7 +10,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '$locat
 	this.cardValues = cardSrvs.getCardValues();
 // console.log(this.cardValues['AH']);
 	//round tracker
-	this.currentRound = 9;
+	this.currentRound = 1;
 	this.players = [];
 
 	//used to dermine who's turn it is
