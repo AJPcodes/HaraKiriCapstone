@@ -326,6 +326,16 @@ socket.on('receive:gameData', function (data) {
 		$location.path("/");
 	};
 
+	//Trigger an Alert when a player disconnects
+	socket.on('user:disconnect', function (data) {
+		console.log(this.gameName);
+		console.log(data.gameName);
+		if (this.gameName == data.gameName) {
+			alert(data.userName + ' Disconnected!');
+			$location.path("/");
+		}
+	}.bind(this));
+
 }]); //end gameCtrl
 
 

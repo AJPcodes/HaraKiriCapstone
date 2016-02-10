@@ -105,11 +105,11 @@ module.exports = function (socket) {
       users: userNames.get()
     });
 
-
-    // if (userGame) {
-    //   socket.broadcast.emit('send:disconnect', {
-    //     game: userGame;
-    //   })
-    // }
-  });
+    if (userGame) {
+      socket.broadcast.emit('user:disconnect', {
+        gameName: userGame.name,
+        userName: userName
+      })
+    }
+  }); //end disconnect
 }; //end module exports
