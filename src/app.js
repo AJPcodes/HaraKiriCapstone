@@ -28,6 +28,11 @@ app.get('/', function(req, res){
 	res.render('index');
 });
 
+app.get('/api/deckOfCards', (req, res) => {
+  let cardsApi = require('./lib/cardsApi.js');
+  cardsApi.getNewDeck(res);
+});
+
 app.get('*', function(req, res){
 	res.render('index');
 });
