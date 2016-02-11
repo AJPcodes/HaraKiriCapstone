@@ -102,7 +102,7 @@ app.controller('GameFinderCtrl',['$rootScope', "$location", 'configSrvs', 'socke
 	socket.on('game:start', function(data) {
 
 		//check if the user is in the game that's starting
-		if (data.gameToStart.name == this.currentGame.name) {
+		if (this.currentGame && data.gameToStart.name == this.currentGame.name) {
 
 		//set up game variables using config factory and change to the gameboard
 		config.setUpOnlineGame(data.gameToStart, this.currentUserName);
