@@ -1,15 +1,17 @@
 'use strict';
 
-var express = require('express');
-var app = express();
-var PORT = 3000;
+const express = require('express');
+const app = express();
+const PORT = 3000;
+const cardsApi = require('./lib/cardsApi.js');
+cardsApi.prepareNewDeck();
 
 if (process.env.PORT) {
     PORT = process.env.PORT;
 }
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 
 io.on('connection', function(socket){
@@ -29,7 +31,6 @@ app.get('/', function(req, res){
 });
 
 app.get('/api/deckOfCards', (req, res) => {
-  let cardsApi = require('./lib/cardsApi.js');
   cardsApi.getNewDeck(res);
 });
 

@@ -1,5 +1,6 @@
 app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '$location', function($rootScope, cardSrvs, config, $q, $location) {
-
+	//prepare deck
+	cardSrvs.prepareNewDeck();
 	//card-back style
 	this.deckStyle = config.newGame().deckStyle;
 
@@ -10,7 +11,7 @@ app.controller('GameCtrl',['$rootScope', 'cardSrvs', 'configSrvs', '$q', '$locat
 	this.cardValues = cardSrvs.getCardValues();
 // console.log(this.cardValues['AH']);
 	//round tracker
-	this.currentRound = z;
+	this.currentRound = 1;
 	this.players = [];
 
 	//used to dermine who's turn it is

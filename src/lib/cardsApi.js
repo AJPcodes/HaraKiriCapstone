@@ -1,19 +1,53 @@
 "use strict";
-const request = require('request');
+// const request = require('request');
+// const bodyParser = require('body-parser');
+const http = require('http');
 
 var newDeck = [];
 
-generateDeck = function(){
+var generateDeck = function(){
 
   let newDeckUrl = 'http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=4';
-  request.get(newDeckUrl)
-    .on('response', function(response) {
-      let shuffleDeckUrl = 'http://deckofcardsapi.com/api/deck/' +response.data.deck_id +'/draw/?count=208'
-      request.get(shuffleDeckUrl)
-        .on('response', function(response2){
-          newDeck = response.data.cards;
+
+  http.get(newDeckUrl, function(res){
+      var body = '';
+
+      res.on('data', function(chunk){
+          body += chunk;
       });
-  });  //end getNewDeck
+
+      res.on('end', function(){
+          let resData = JSON.parse(body);
+          //secondAPI Call
+            let shuffleDeckUrl = 'http://deckofcardsapi.com/api/deck/' + resData.deck_id +'/draw/?count=208'
+            http.get(shuffleDeckUrl, function(res){
+                let body2 = '';
+
+                res.on('data', function(chunk){
+                    body2 += chunk;
+                });
+
+                res.on('end', function(){
+                    let resData2 = JSON.parse(body2);
+                    // console.log(resData2);
+                    newDeck = resData2.cards;
+
+                });
+            }).on('error', function(e){
+                  console.log("Got an error: ", e);
+            }); //end second api call
+
+      });
+  }).on('error', function(e){
+        console.log("Got an error: ", e);
+  });
+
+      // let shuffleDeckUrl = 'http://deckofcardsapi.com/api/deck/' +response.data.deck_id +'/draw/?count=208'
+      // request.get(shuffleDeckUrl)
+      //   .on('response', function(err, response2){
+      //     newDeck = response2.data.cards;
+      // });
+
 };
 
 //immediately generate a usable deck
@@ -236,6 +270,7 @@ module.exports = {
 
     getNewDeck: function(res){
       res.send(newDeck);
+      generateDeck();
     },
 
     prepareNewDeck: function(){
