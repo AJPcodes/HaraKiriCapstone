@@ -69,7 +69,7 @@ socket.on('receive:gameData', function (data) {
 	this.currentUser = config.newOnlineGame().userName;
 	//round tracker
 	this.roundOver = false;
-	this.currentRound = 9;
+	this.currentRound = 1;
 	this.currentPlayer = '';
 
  	//game name
