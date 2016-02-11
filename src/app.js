@@ -2,17 +2,16 @@
 
 const express = require('express');
 const app = express();
-const PORT = 3000;
 const cardsApi = require('./lib/cardsApi.js');
-cardsApi.prepareNewDeck();
-
-if (process.env.PORT) {
-    PORT = process.env.PORT;
-}
-
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+let PORT = 3000;
+
+if (process.env.PORT) {
+  PORT = process.env.PORT;
+}
+cardsApi.prepareNewDeck();
 
 io.on('connection', function(socket){
   // console.log('a user connected');
