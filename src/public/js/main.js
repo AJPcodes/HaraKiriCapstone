@@ -1,5 +1,5 @@
 //initialize app
-var app = angular.module('CapstoneApp', ["firebase", 'angular.filter', 'ngRoute']);
+var app = angular.module('CapstoneApp', ['angular.filter', 'ngRoute']);
 
 
 //Setting Up routes
